@@ -398,3 +398,369 @@ ln -f haproxy.cfg /etc/haproxy/haproxy.cfg
 vim haproxy.cfg 
 rc-service haproxy reload
 vim haproxy.cfg ; rc-service haproxy reload
+    1  clear
+    2  tar -xvf haproxy-kingpin-build00.tar.gz 
+    3  ls
+    4  tar -jxvf haproxy-kingpin-build00.tar.gz 
+    5  ls
+    6  rm haproxy-kingpin-build00.tar.gz 
+    7  exit
+    8  vim /etc/systemd/network/eth0.network 
+    9  vi /etc/systemd/network/eth0.network 
+   10  reboot
+   11  ls
+   12  tar xvf haproxy-kingpin-build00.tar 
+   13  clear
+   14  ls
+   15  ln -f /etc/systemd/network/eth0.network .
+   16  ls
+   17  dnf install vim haproxy podman cri-utils buildah
+   18  dnf install vim haproxy podman cri-o buildah
+   19  dnf install vim haproxy podman buildah
+   20  dnf install vim haproxy podman buildah squashfuse
+   21  clear
+   22  ls
+   23  ln -f haproxy.cfg /etc/haproxy/haproxy.cfg 
+   24  systemctl enable --now haproxy
+   25  systemctl status haproxy
+   26  exit
+   27  clear
+   28  ls
+   29  cat haproxy-kingpin-build
+   30  cat haproxy-kingpin-build.log 
+   31  mkdir /root/letsencrypt/{active,backup,certbot/secrets} -P
+   32  mkdir -P /root/letsencrypt/{active,backup,certbot/secrets}
+   33  mkdir -p /root/letsencrypt/{active,backup,certbot/secrets}
+   34  ls
+   35  tree letsencrypt
+   36  ls -lah letsencrypt/*
+   37  ls -lah letsencrypt/certbot/*
+   38  podman run -it --name certbot --rm -v "/root/letsencrypt/active:/etc/letsencrypt" -v "/letsencrypt/backup:/var/lib/letsencrypt" -v "/root/letsencrypt/certbot/secrets:/secrets" certbot/dns-google --dns-google --dns-google-credentials /secrets/google.json --server https://acme-v02.api.letsencrypt.org/directory -d '*.ministack.dev'
+   39  dnf search fuse-overlayfs
+   40  dnf install fuse-overlayfs
+   41  find / -name storage.conf 2>/dev/null
+   42  vim /etc/containers/storage.conf 
+   43  vim /etc/containers/storage.conf 
+   44  podman run -it --name certbot --rm -v "/root/letsencrypt/active:/etc/letsencrypt" -v "/letsencrypt/backup:/var/lib/letsencrypt" -v "/root/letsencrypt/certbot/secrets:/secrets" certbot/dns-google --dns-google --dns-google-credentials /secrets/google.json --server https://acme-v02.api.letsencrypt.org/directory -d '*.ministack.dev'
+   45  ls letsencrypt/
+   46  podman run -it --name certbot --rm -v "/root/letsencrypt/active:/etc/letsencrypt" -v "/root/letsencrypt/backup:/var/lib/letsencrypt" -v "/root/letsencrypt/certbot/secrets:/secrets" certbot/dns-google --dns-google --dns-google-credentials /secrets/google.json --server https://acme-v02.api.letsencrypt.org/directory -d '*.ministack.dev'
+   47  podman run -it --name certbot --rm -v "/root/letsencrypt/active:/etc/letsencrypt" -v "/root/letsencrypt/backup:/var/lib/letsencrypt" -v "/root/letsencrypt/certbot/secrets:/secrets" certbot/dns-google --dns-google --dns-google-credentials /secrets/google.json --server https://acme-v02.api.letsencrypt.org/directory -d '*.ministack.dev'
+   48  ln /etc/containers/storage.conf .
+   49  vim storage.conf 
+   50  ls
+   51  clear
+   52  ls
+   53  vim run-letsencrypt-dns.sh
+   54  podman containers list
+   55  podman container list
+   56  vim run-letsencrypt-dns.sh
+   57  clear
+   58  . run-letsencrypt-dns.sh 
+   59  vim run-letsencrypt-dns.sh
+   60  mkdir letsencrypt/log
+   61  . run-letsencrypt-dns.sh 
+   62  vim letsencrypt/log/letsencrypt.log
+   63  vim run-letsencrypt-dns.sh
+   64  vim run-letsencrypt-dns.sh
+   65  clear; . run-letsencrypt-dns.sh 
+   66  ls
+   67  vim run-letsencrypt-dns.sh
+   68  clear; . run-letsencrypt-dns.sh 
+   69  cat run-letsencrypt-dns.sh
+   70  dnf install tree --y
+   71  dnf install tree -y
+   72  ls
+   73  tree letsencrypt/
+   74  clear
+   75  tree letsencrypt/
+   76  vim letsencrypt/certbot/secrets/google.json
+   77  ls
+   78  . run-letsencrypt-dns.sh 
+   79  clear; . run-letsencrypt-dns.sh 
+   80  clear; . run-letsencrypt-dns.sh 
+   81  chmod 600 /root/letsencrypt/certbot/secrets/google.json 
+   82  clear; . run-letsencrypt-dns.sh 
+   83  clear; . run-letsencrypt-dns.sh 
+   84  clear; . run-letsencrypt-dns.sh 
+   85  clear; . run-letsencrypt-dns.sh 
+   86  clear; . run-letsencrypt-dns.sh 
+   87  clear; . run-letsencrypt-dns.sh 
+   88  clear; . run-letsencrypt-dns.sh 
+   89  clear; . run-letsencrypt-dns.sh 
+   90  clear; . run-letsencrypt-dns.sh 
+   91  clear; . run-letsencrypt-dns.sh 
+   92  vim letsencrypt/certbot/secrets/google.json 
+   93  clear; . run-letsencrypt-dns.sh 
+   94  clear; . run-letsencrypt-dns.sh 
+   95  tree letsencrypt/
+   96  rm letsencrypt/log/letsencrypt.log*
+   97  clear
+   98  cd letsencrypt/
+   99  tree .
+  100  tree . | less
+  101  tree . | more
+  102  tree . | more
+  103  tree . | more
+  104  clear
+  105  ls
+  106  cd ..
+  107  ls
+  108  cp run-letsencrypt-dns.sh run-letsencrypt-wildcard-new
+  109  chmod +x run-letsencrypt-wildcard-new 
+  110  vim run-letsencrypt-wildcard-new 
+  111  ./run-letsencrypt-wildcard-new ocp4.ministack.dev
+  112  tree letsencrypt/
+  113  clear
+  114  ls
+  115  clear
+  116  history | grep mkdir
+  117  cd letsencrypt/
+  118  ls
+  119  mkdir bak
+  120  mv * bak/
+  121  cd ..
+  122  ls
+  123  mv run-letsencrypt-wildcard-new run-letsencrypt-new-wildcard
+  124  mv run-letsencrypt-dns.sh bak/
+  125  ls
+  126  vim run-letsencrypt-new-wildcard 
+  127  ./run-letsencrypt-new-wildcard 
+  128  vim run-letsencrypt-new-wildcard 
+  129  clear; ./run-letsencrypt-new-wildcard 
+  130  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  131  mv letsencrypt/bak/certbot letsencrypt/
+  132  vim run-letsencrypt-new-wildcard 
+  133  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  134  file /root/letsencrypt/certbot/secrets/google.json
+  135  vim run-letsencrypt-new-wildcard 
+  136  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  137  vim run-letsencrypt-new-wildcard 
+  138  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  139  ls letsencrypt/
+  140  rmdir letsencrypt/ocp4.ministack.dev
+  141  rm letsencrypt/ocp4.ministack.dev -rf
+  142  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  143  ls letsencrypt/
+  144  vim run-letsencrypt-new-wildcard 
+  145  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  146  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  147  vim run-letsencrypt-new-wildcard 
+  148  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  149  clear; ./run-letsencrypt-new-wildcard apps.ocp4.ministack.dev
+  150  clear; ./run-letsencrypt-new-wildcard ministack.dev
+  151  tree -L 2 letsencrypt/
+  152  clear; tree -L 3 letsencrypt/
+  153  cat letsencrypt/*/log/*
+  154  clear
+  155  ls
+  156  clear; ll
+  157  history | tee -a haproxy-kingpin-build.log 
+  158  cat build.log >> haproxy-kingpin-build.log 
+  159  clear
+  160  ls
+  161  rm build.log haproxy-kingpin-build00.tar 
+  162  ls
+  163  mv bak/ .bak
+  164  mv letsencrypt/bak/ ./.bak/letsencrypt-old
+  165  clear; ls
+  166  vim configure 
+  167  vim storage.conf 
+  168  vim storage.conf 
+  169  mv storage.conf .bak/
+  170  clear; ls
+  171  tree letsencrypt/ -L 3
+  172  tree letsencrypt/ -L 4
+  173  vim run-letsencrypt-new-wildcard 
+  174  mkdir letsencrypt/certbot/log
+  175  vim run-letsencrypt-new-wildcard 
+  176  mv letsencrypt/certbot/log/ letsencrypt/certbot/logs
+  177  cd letsencrypt/
+  178  clear
+  179  ls
+  180  mkdir issued
+  181  mv *ministack.dev issued/
+  182  ls
+  183  cd ..
+  184  ls
+  185  vim run-letsencrypt-new-wildcard 
+  186  clear
+  187  ls
+  188  ls letsencrypt/
+  189  mkdir letsencrypt/master
+  190  tree letsencrypt/issued/
+  191  clear; tree -L 2 letsencrypt/issued/
+  192  rm -rf letsencrypt/issued/*/log 
+  193  clear; tree -L 2 letsencrypt/issued/
+  194  clear; tree -L 3 letsencrypt/issued/
+  195  clear; tree -L 4 letsencrypt/issued/
+  196  clear; tree -L 5 letsencrypt/issued/
+  197  clear; tree -L 4 letsencrypt/issued/
+  198  clear; tree -L 5 letsencrypt/issued/
+  199  file /root/letsencrypt/issued/apps.ocp4.ministack.dev/active/live/apps.ocp4.ministack.dev/chain.pem 
+  200  file /root/letsencrypt/issued/apps.ocp4.ministack.dev/active/archive/apps.ocp4.ministack.dev/
+  201  vim /root/letsencrypt/issued/apps.ocp4.ministack.dev/active/live/apps.ocp4.ministack.dev/README 
+  202  vim /root/letsencrypt/issued/apps.ocp4.ministack.dev/active/live/README 
+  203  for i in $(ls /root/letsencrypt/issued/); do echo $i; done
+  204  for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls $i/active/archive/$i; done
+  205  for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls $i/active/archive/$i; echo;  done
+  206  for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls /root/letsencrypt/issued/$i/active/archive/$i; echo;  done
+  207  echo; for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls /root/letsencrypt/issued/$i/active/archive/$i; echo;  done
+  208  clear; echo; for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls /root/letsencrypt/issued/$i/active/archive/$i; echo;  done
+  209  clear; echo; for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls /root/letsencrypt/issued/$i/active/archive/$i; echo; cat /root/letsencrypt/issued/$i/active/archive/$i/fullchain1.pem >>master.pem; done
+  210  ls
+  211  cat master.pem 
+  212  clear
+  213  file master.pem 
+  214  openssl x509 -in master.pem -text | more
+  215  clear; echo; for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls /root/letsencrypt/issued/$i/active/archive/$i; echo; cat /root/letsencrypt/issued/$i/active/archive/$i/fullchain1.pem; done
+  216  echo "" >master.pem 
+  217  clear; echo; for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls /root/letsencrypt/issued/$i/active/archive/$i; echo; cat /root/letsencrypt/issued/$i/active/archive/$i/fullchain1.pem >>master.pem; done
+  218  cat master.pem | more
+  219  openssl x509 -in master.pem -text | more
+  220  openssl x509 -in master.pem -text | more
+  221  openssl x509 -in master.pem -text | grep Subject
+  222  clear
+  223  ls
+  224  mkdir test; cd test; clear; echo; for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls /root/letsencrypt/issued/$i/active/archive/$i; echo; cat /root/letsencrypt/issued/$i/active/archive/$i/fullchain1.pem >>$i.pem; done
+  225  ls
+  226  cat apps.ocp4.ministack.dev.pem 
+  227  cat ministack.dev.pem 
+  228  cat ocp4.ministack.dev.pem 
+  229  clear
+  230  ls
+  231  for i in $(ls); do cat $i >> master.pem; done
+  232  openssl x509 -in master.pem -text | grep Subject
+  233  rm *; clear; echo; for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls /root/letsencrypt/issued/$i/active/archive/$i; echo; cat /root/letsencrypt/issued/$i/active/archive/$i/.pem >>$i.pem; done
+  234  ls
+  235  cat *
+  236  ls ../letsencrypt/issued/ministack.dev/active/archive/ministack.dev/cert1.pem 
+  237  rm *; clear; echo; for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls /root/letsencrypt/issued/$i/active/archive/$i; echo; cat /root/letsencrypt/issued/$i/active/archive/$i/cert1.pem >>bundle.pem; done
+  238  openssl x509 -in bundle.pem -text | less
+  239  openssl x509 -in bundle.pem -text | more
+  240   clear
+  241  ls
+  242  openssl crl2pkcs7 -nocrl -certfile bundle.pem | openssl pkcs7 -print_certs -text -noout
+  243  openssl crl2pkcs7 -nocrl -certfile bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "CN ="
+  244  openssl crl2pkcs7 -nocrl -certfile bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "CN"
+  245  openssl crl2pkcs7 -nocrl -certfile bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "CN="
+  246  openssl crl2pkcs7 -nocrl -certfile bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "Subject: CN="
+  247  echo 'openssl crl2pkcs7 -nocrl -certfile bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "Subject: CN="' >>log
+  248  echo 'rm *; clear; echo; for i in $(ls /root/letsencrypt/issued/); do echo $i/active/archive/$i; ls /root/letsencrypt/issued/$i/active/archive/$i; echo; cat /root/letsencrypt/issued/$i/active/archive/$i/cert1.pem >>bundle.pem; done' >>log
+  249  cat log 
+  250  clear
+  251  mv log run-make-master-pem
+  252  mv run-make-master-pem ..
+  253  cd ..
+  254  ls
+  255  chmod +x ./run-make-master-pem 
+  256  ls
+  257  ls ssl
+  258  openssl crl2pkcs7 -nocrl -certfile test/bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "Subject: CN="
+  259  openssl crl2pkcs7 -nocrl -certfile test/bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "Subject: CN=" | awk -F':=' '{print $2}'
+  260  openssl crl2pkcs7 -nocrl -certfile test/bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "Subject: CN=" | awk -F':=' '{print $1}'
+  261  openssl crl2pkcs7 -nocrl -certfile test/bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "Subject: CN=" | awk -F':= ' '{print $1}'
+  262  openssl crl2pkcs7 -nocrl -certfile test/bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "Subject: CN=" | awk -F':= ,' '{print $1}'
+  263  openssl crl2pkcs7 -nocrl -certfile test/bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "Subject: CN=" | awk -F'\:\=\ \,' '{print $1}'
+  264  openssl crl2pkcs7 -nocrl -certfile test/bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "Subject: CN=" | awk '{print $1}'
+  265  openssl crl2pkcs7 -nocrl -certfile test/bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "Subject: CN=" | awk '{print $2}'
+  266  openssl crl2pkcs7 -nocrl -certfile test/bundle.pem | openssl pkcs7 -print_certs -text -noout | grep "Subject: CN=" | awk -F'=' '{print $2}'
+  267  vim run-make-master-pem 
+  268  vim run-make-master-pem 
+  269  vim run-make-master-pem 
+  270  ls /root/letsencrypt/issued/ministack.dev/active/archive/ministack.dev/privkey1.pem 
+  271  vim run-make-master-pem 
+  272  vim run-make-master-pem 
+  273  ls
+  274  clear
+  275  ls
+  276  ls letsencrypt/
+  277  cp -r letsencrypt/ letsencrypt.bak/
+  278  ls
+  279  ./run-make-master-pem 
+  280  vim run-make-master-pem; ./run-make-master-pem 
+  281  ./run-make-master-pem 
+  282  vim run-make-master-pem; ./run-make-master-pem 
+  283  ls letsencrypt/bundle/bundle.pem 
+  284  cat letsencrypt/bundle/bundle.pem 
+  285  vim run-make-master-pem; ./run-make-master-pem 
+  286  vim run-make-master-pem; ./run-make-master-pem 
+  287  file /root/letsencrypt/issued/ocp4.ministack.dev/active/archive/ocp4.ministack.dev/cert1.pem
+  288  vim run-make-master-pem; ./run-make-master-pem 
+  289  vim run-make-master-pem; ./run-make-master-pem 
+  290  vim run-make-master-pem; ./run-make-master-pem 
+  291  vim run-make-master-pem; ./run-make-master-pem 
+  292  vim run-make-master-pem; ./run-make-master-pem 
+  293  ls
+  294  vim haproxy.cfg 
+  295  ls ssl/
+  296  cat ssl/braincraft.io.pem 
+  297  cat ssl/braincraft.io.pem >> letsencrypt/bundle/bundle.pem 
+  298  clear
+  299  ls -lah ssl/
+  300  touch 1 ; chmod 644 1; ls -lah 1
+  301  rm 1 
+  302  vim run-make-master-pem
+  303  chmod 644 letsencrypt/bundle/bundle.pem 
+  304  ls -lah letsencrypt/bundle/bundle.pem 
+  305  vim haproxy.cfg 
+  306  ls
+  307  mv configure haproxy-configure
+  308  mv haproxy-configure configure-haproxy
+  309  ln -f configure-haproxy /bin/
+  310  configure-haproxy 
+  311  vim configure-haproxy 
+  312  configure-haproxy 
+  313  openssl verify /root/letsencrypt/bundle/bundle.pem 
+  314  openssl x509 -in /root/letsencrypt/bundle/bundle.pem -noout -issuer
+  315  openssl x509 -in /root/letsencrypt/bundle/bundle.pem -noout -subject
+  316  ls /root/letsencrypt/issued/ministack.dev/active/archive/ministack.dev/
+  317  ls
+  318  cp run-letsencrypt-new-wildcard run-letsencrypt-renew-wildcard 
+  319  mv run-letsencrypt-new-wildcard new-letsencrypt-wildcard
+  320  mv run-letsencrypt-renew-wildcard renew-letsencrypt-wildcard
+  321  mv run-make-master-pem make-master-pem
+  322  ls
+  323  clear
+  324  ls
+  325  rm master.pem 
+  326  ls
+  327  mv letsencrypt.bak/ .bak/
+  328  ls
+  329  clear
+  330  ls
+  331  mv haproxy-kingpin-build.log build.log
+  332  vim build.log 
+  333  clear; ls
+  334  rm -rf test/
+  335  ls
+  336  clear; ll
+  337  ls -l
+  338  vim renew-letsencrypt-wildcard 
+  339  ./renew-letsencrypt-wildcard ministack.dev
+  340  vim renew-letsencrypt-wildcard 
+  341  ./renew-letsencrypt-wildcard
+  342  ./renew-letsencrypt-wildcard ministack.dev
+  343  clear
+  344  ls
+  345  vim renew-letsencrypt-wildcard 
+  346  clear
+  347  configure-haproxy 
+  348  ls
+  349  rm letsencrypt/bundle/bundle.pem 
+  350  vim make-master-pem 
+  351  . make-master-pem 
+  352  vim make-master-pem 
+  353  . make-master-pem 
+  354  ls letsencrypt/bundle/
+  355  cp ssl/braincraft.io.pem letsencrypt/bundle/
+  356  file /root/letsencrypt/bundle/
+  357  configure-haproxy 
+  358  tree -L 3 letsencrypt/
+  359  tree -L 4 letsencrypt/
+  360  clear
+  361  configure-haproxy 
+  362  ls
+  363  exit
+  364  ls
+  365  history
+  366  history >> build.log 
