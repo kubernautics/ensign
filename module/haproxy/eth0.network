@@ -1,0 +1,9 @@
+[Match]
+Name=eth0
+
+[Network]
+Address=10.10.91.5/24
+Gateway=10.10.91.1
+DNS=10.10.91.1
+Domains=ocp4.ministack.dev
+#DHCP=ipv4

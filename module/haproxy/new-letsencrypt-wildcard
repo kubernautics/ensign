@@ -1,0 +1,48 @@
+#!/bin/bash -x
+req_DOM=$1
+email_ADMIN='admin@braincraft.io'
+
+root_CERTSTORE=/root/letsencrypt
+root_DOMSTORE="${root_CERTSTORE}/issued/${req_DOM}"
+certbot_SECRETS="${root_CERTSTORE}/certbot/secrets/google.json"
+certbot_LOGS="${certbot_CERTSTORE}/logs"
+
+# Logging Function
+echo_log () {
+  if [[ $1 == "0" ]]; then
+	  echo "STAT>> $2 ..."
+  elif [[ $1 == "2" ]]; then
+	  echo "WARN>> $2 ..."
+  elif [[ $1 == "1" ]]; then
+	  echo "ERROR>> $2"
+	  echo "ERROR>> Critical Exiting!"
+          exit 1
+  fi
+}
+
+# Test for secrets file && abort if not found
+[[ ! -d ${certbot_SECRETS} ]] || echo_log 1 "Secrets File Not Found!"
+[[ ! -d ${certbot_LOGS} ]]    || mkdir -p ${certbot_LOGS}
+
+# Test for directory tree && make new if not found
+[[ -d ${root_DOMSTORE} ]] || mkdir -p ${root_DOMSTORE}/{active,backup}
+
+# Core podman certbot run routine
+podman_run_certbot () {
+podman run -it \
+	--name certbot --rm \
+	-v "${root_DOMSTORE}/active:/etc/letsencrypt" \
+	-v "${root_DOMSTORE}/backup:/var/lib/letsencrypt" \
+	-v "${root_CERTSTORE}/certbot/logs:/var/log/letsencrypt/" \
+	-v "${root_CERTSTORE}/certbot/secrets:/secrets" \
+	certbot/dns-google certonly \
+		--agree-tos \
+                --dns-google \
+		--email "${email_ADMIN}" \
+		--dns-google-credentials /secrets/google.json \
+		--server https://acme-v02.api.letsencrypt.org/directory \
+		-d "*.${req_DOM}"
+}
+
+podman_run_certbot 
+

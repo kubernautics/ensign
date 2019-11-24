@@ -1,0 +1,400 @@
+#### # Lets Encrypt Enabled Haproxy KingPin Build Notes
+   0 apk add bash
+   1 exit
+   2 setup-hostname 
+   3 setup-interfaces 
+   4 reboot
+   5 ip a
+   6 apk update
+   7 clear
+   8 ls
+   9 tar xvf bcio-sfdrop-haproxy_191102.tar.xz 
+  10 ls
+  11 rm bcio-sfdrop-haproxy_191102.tar.xz 
+  12 mv root/* .
+  13 ls
+  14 clear
+  15 cat build.log 
+  16 apk update; apk upgrade
+  17 apk add vim haproxy curl
+  18 rc-update add haproxy
+  19 mkdir bak
+  20 cp /etc/haproxy/haproxy.cfg bak/
+  21 ln -f haproxy.cfg /etc/haproxy/haproxy.cfg 
+  22 ls
+  23 ls root/
+  24 rmdir root/
+  25 clear
+  26 vim haproxy.cfg 
+  27 ls
+  28 rm haproxy.cfg 
+  29 exit
+  30 ln -f haproxy.cfg /etc/haproxy/haproxy.cfg 
+  31 vim haproxy.cfg 
+  32 rc-service start haproxy
+  33 rc-service load haproxy
+  34 rc-service --help
+  35 reboot
+  36 rc-service status haproxy
+  37 clear
+  38 /etc/init.d/haproxy status
+  39 exit
+  40 vim haproxy.cfg 
+  41 /etc/init.d/haproxy reload
+  42 grep reqadd haproxy.cfg 
+  43 clear
+  44 exit
+  45 vim haproxy.cfg 
+  46 curl 10.10.91.1:80
+  47 vim haproxy.cfg 
+  48 reboot
+  49 vim haproxy.cfg 
+  50 /etc/init.d/haproxy reload
+  51 ls
+  52 exit
+  53 vim haproxy.cfg 
+  54 rc-service reload
+  55 rc-service haproxy reload
+  56 exit
+  57 vim haproxy.cfg `
+  58 vim haproxy.cfg 
+  59 '
+  60 `
+  61 vim haproxy.cfg
+  62 ping 10.10.20.1
+  63 curl 10.10.20.1:80
+  64 clear
+  65 rc-service haproxy reload
+  66 vim haproxy.cfg
+  67 rc-service haproxy reload
+  68 vim haproxy.cfg
+  69 rc-service haproxy reload
+  70 reboot
+  71 clear
+  72 exit
+  73 ls
+  74 vim haproxy.cfg 
+  75 rc-service haproxy reload
+  76 ping 10.10.20.3
+  77 reboot
+  78 ping 10.10.20.3
+  79 vim haproxy.cfg 
+  80 ping 10.10.20.1
+  81 reboot
+  82 exit
+  83 vi haproxy.cfg 
+  84 rc-service haproxy update
+  85 rc-service haproxy reload
+  86 reboot
+  87 clear
+  88 exit
+  89 vi haproxy.cfg 
+  90 reboot
+  91 rc-service haproxy reload
+  92 rc-service haproxy start
+  93 vi haproxy.cfg 
+  94 rc-service haproxy start
+  95 vi haproxy.cfg 
+  96 rc-service haproxy start
+  97 vi haproxy.cfg 
+  98 rc-service haproxy start
+  99 vi haproxy.cfg 
+ 100 clear; rc-service haproxy start
+ 101 vi haproxy.cfg 
+ 102 clear; rc-service haproxy start
+ 103 vi haproxy.cfg 
+ 104 clear; rc-service haproxy start
+ 105 vi haproxy.cfg 
+ 106 clear; rc-service haproxy start
+ 107 vi haproxy.cfg 
+ 108 clear; rc-service haproxy start
+ 109 exit
+ 110 touch configure
+ 111 chmod +x configure 
+ 112 echo '#!/bin/bash' >configure 
+ 113 vim configure 
+ 114 exit
+ 115 vi haproxy.cfg 
+ 116 vi configure 
+ 117 exit
+ 118 ./configure 
+ 119 clear
+ 120 vi configure 
+ 121 exit
+ 122 ln configure /bin/configure
+ 123 ls -lah /bin/configure 
+ 124 exit
+ 125 ls
+ 126 exit
+ 127 ping irc
+ 128 ping irc.braincraft.io
+ 129 ping 10.10.91.61
+ 130 exit
+ 131 ls
+ 132 vim haproxy.cfg 
+ 133 ping 10.10.20.3
+ 134 exit
+ 135 vim haproxy.cfg 
+ 136 systemctl restart haproxy
+ 137 rc-service haproxy reload
+ 138 exit
+ 139 vim haproxy.cfg 
+ 140 curl 172.30.0.4:9000
+ 141 clear
+ 142 rc-service haproxy reload
+ 143 exit
+ 144 reboot
+ 145 rc-service haproxy status
+ 146 tracepath
+ 147 traceroute 172.30.0.4
+ 148 ssh cloudctl
+ 149 exit
+ 150 traceroute 172.30.0.4
+ 151 traceroute 10.10.20.119
+ 152 curl 10.10.20.119:9000
+ 153 vi haproxy.cfg 
+ 154 rc-service haproxy status
+ 155 rc-service haproxy reload
+ 156 vi haproxy.cfg 
+ 157 rc-service haproxy rel
+ 158 rc-service haproxy reload
+ 159 exit
+ 160 clear
+ 161 vi haproxy.cfg 
+ 162 rc-service haproxy reload
+ 163 vi haproxy.cfg 
+ 164 rc-service haproxy reload
+ 165 exit
+ 166 vi haproxy.cfg 
+ 167 exit
+ 168 vim haproxy.cfg `
+ 169 vim haproxy.cfg 
+ 170 '
+ 171 `
+ 172 vim haproxy.cfg 
+ 173 rm haproxy.cfg 
+ 174 mv .haproxy.cfg.swp haproxy.cfg
+ 175 ls
+ 176 vim haproxy.cfg 
+ 177 mv haproxy.cfg haproxy.cfg.bak
+ 178 cp haproxy.cfg.bak .haproxy.cfg.swp
+ 179 ls
+ 180 cp haproxy.cfg.bak haproxy.cfg
+ 181 vim haproxy.cfg
+ 182 ls
+ 183 ll
+ 184 ls -la
+ 185 rm haproxy.cfg
+ 186 touch haproxy.cfg
+ 187 vim haproxy.cfg
+ 188 rm .haproxy.cfg.swp 
+ 189 vim haproxy.cfg
+ 190 ls
+ 191 rm haproxy.cfg*
+ 192 ls
+ 193 clear
+ 194 ls -lah
+ 195 ls
+ 196 exit
+ 197 apk update
+ 198 apk upgrade
+ 199 apk add certbot
+ 200 clear
+ 201 ls
+ 202 vi /etc/haproxy/haproxy.cfg
+ 203 ln /etc/haproxy/haproxy.cfg
+ 204 vi haproxy.cfg 
+ 205 clear
+ 206 exit
+ 207 apk install podman
+ 208 exit
+ 209 rc-service haproxy restart
+ 210 vi haproxy.cfg 
+ 211 rc-service haproxy restart
+ 212 vi haproxy.cfg 
+ 213 rc-service haproxy restart
+ 214 vi haproxy.cfg 
+ 215 rc-service haproxy restart
+ 216 exit
+ 217 apk update
+ 218 apk add podman
+ 219 apk add squashfuse
+ 220 apk add docker
+ 221 service docker start
+ 222 ls
+ 223 mkdir /root/letsencrypt
+ 224 mkdir letsencrypt/active
+ 225 mkdir letsencrypt/backup
+ 226 mkdir letsencrypt/certbot/secrets -p
+ 227 docker run -it --name certbot --rm -v "/root/letsencrypt/active:/etc/letsencrypt" -v "/letsencrypt/backup:/var/lib/letsencrypt" -v "/root/letsencrypt/certbot/secrets:/secrets" certbot/dns-google --dns-google --dns-google-credentials /secrets/google.json --server https://acme-v02.api.letsencrypt.org/directory -d '*.ministack.dev'
+ 228 history | tee haproxy-kingpin-build.log
+    1  clear
+    2  tar -xvf haproxy-kingpin-build00.tar.gz 
+    3  ls
+    4  tar -jxvf haproxy-kingpin-build00.tar.gz 
+    5  ls
+    6  rm haproxy-kingpin-build00.tar.gz 
+    7  exit
+    8  vim /etc/systemd/network/eth0.network 
+    9  vi /etc/systemd/network/eth0.network 
+   10  reboot
+   11  ls
+   12  tar xvf haproxy-kingpin-build00.tar 
+   13  clear
+   14  ls
+   15  ln -f /etc/systemd/network/eth0.network .
+   16  ls
+   17  dnf install vim haproxy podman cri-utils buildah
+   18  dnf install vim haproxy podman cri-o buildah
+   19  dnf install vim haproxy podman buildah
+   20  dnf install vim haproxy podman buildah squashfuse
+   21  clear
+   22  ls
+   23  ln -f haproxy.cfg /etc/haproxy/haproxy.cfg 
+   24  systemctl enable --now haproxy
+   25  systemctl status haproxy
+   26  exit
+   27  clear
+   28  ls
+   29  cat haproxy-kingpin-build
+   30  cat haproxy-kingpin-build.log 
+   31  mkdir /root/letsencrypt/{active,backup,certbot/secrets} -P
+   32  mkdir -P /root/letsencrypt/{active,backup,certbot/secrets}
+   33  mkdir -p /root/letsencrypt/{active,backup,certbot/secrets}
+   34  ls
+   35  tree letsencrypt
+   36  ls -lah letsencrypt/*
+   37  ls -lah letsencrypt/certbot/*
+   38  podman run -it --name certbot --rm -v "/root/letsencrypt/active:/etc/letsencrypt" -v "/letsencrypt/backup:/var/lib/letsencrypt" -v "/root/letsencrypt/certbot/secrets:/secrets" certbot/dns-google --dns-google --dns-google-credentials /secrets/google.json --server https://acme-v02.api.letsencrypt.org/directory -d '*.ministack.dev'
+   39  dnf search fuse-overlayfs
+   40  dnf install fuse-overlayfs
+   41  find / -name storage.conf 2>/dev/null
+   42  vim /etc/containers/storage.conf 
+   43  vim /etc/containers/storage.conf 
+   44  podman run -it --name certbot --rm -v "/root/letsencrypt/active:/etc/letsencrypt" -v "/letsencrypt/backup:/var/lib/letsencrypt" -v "/root/letsencrypt/certbot/secrets:/secrets" certbot/dns-google --dns-google --dns-google-credentials /secrets/google.json --server https://acme-v02.api.letsencrypt.org/directory -d '*.ministack.dev'
+   45  ls letsencrypt/
+   46  podman run -it --name certbot --rm -v "/root/letsencrypt/active:/etc/letsencrypt" -v "/root/letsencrypt/backup:/var/lib/letsencrypt" -v "/root/letsencrypt/certbot/secrets:/secrets" certbot/dns-google --dns-google --dns-google-credentials /secrets/google.json --server https://acme-v02.api.letsencrypt.org/directory -d '*.ministack.dev'
+   47  podman run -it --name certbot --rm -v "/root/letsencrypt/active:/etc/letsencrypt" -v "/root/letsencrypt/backup:/var/lib/letsencrypt" -v "/root/letsencrypt/certbot/secrets:/secrets" certbot/dns-google --dns-google --dns-google-credentials /secrets/google.json --server https://acme-v02.api.letsencrypt.org/directory -d '*.ministack.dev'
+   48  ln /etc/containers/storage.conf .
+   49  vim storage.conf 
+   50  ls
+   51  clear
+   52  ls
+   53  vim run-letsencrypt-dns.sh
+   54  podman containers list
+   55  podman container list
+   56  vim run-letsencrypt-dns.sh
+   57  clear
+   58  . run-letsencrypt-dns.sh 
+   59  vim run-letsencrypt-dns.sh
+   60  mkdir letsencrypt/log
+   61  . run-letsencrypt-dns.sh 
+   62  vim letsencrypt/log/letsencrypt.log
+   63  vim run-letsencrypt-dns.sh
+   64  vim run-letsencrypt-dns.sh
+   65  clear; . run-letsencrypt-dns.sh 
+   66  ls
+   67  vim run-letsencrypt-dns.sh
+   68  clear; . run-letsencrypt-dns.sh 
+   69  cat run-letsencrypt-dns.sh
+   70  dnf install tree --y
+   71  dnf install tree -y
+   72  ls
+   73  tree letsencrypt/
+   74  clear
+   75  tree letsencrypt/
+   76  vim letsencrypt/certbot/secrets/google.json
+   77  ls
+   78  . run-letsencrypt-dns.sh 
+   79  clear; . run-letsencrypt-dns.sh 
+   80  clear; . run-letsencrypt-dns.sh 
+   81  chmod 600 /root/letsencrypt/certbot/secrets/google.json 
+   82  clear; . run-letsencrypt-dns.sh 
+   83  clear; . run-letsencrypt-dns.sh 
+   84  clear; . run-letsencrypt-dns.sh 
+   85  clear; . run-letsencrypt-dns.sh 
+   86  clear; . run-letsencrypt-dns.sh 
+   87  clear; . run-letsencrypt-dns.sh 
+   88  clear; . run-letsencrypt-dns.sh 
+   89  clear; . run-letsencrypt-dns.sh 
+   90  clear; . run-letsencrypt-dns.sh 
+   91  clear; . run-letsencrypt-dns.sh 
+   92  vim letsencrypt/certbot/secrets/google.json 
+   93  clear; . run-letsencrypt-dns.sh 
+   94  clear; . run-letsencrypt-dns.sh 
+   95  tree letsencrypt/
+   96  rm letsencrypt/log/letsencrypt.log*
+   97  clear
+   98  cd letsencrypt/
+   99  tree .
+  100  tree . | less
+  101  tree . | more
+  102  tree . | more
+  103  tree . | more
+  104  clear
+  105  ls
+  106  cd ..
+  107  ls
+  108  cp run-letsencrypt-dns.sh run-letsencrypt-wildcard-new
+  109  chmod +x run-letsencrypt-wildcard-new 
+  110  vim run-letsencrypt-wildcard-new 
+  111  ./run-letsencrypt-wildcard-new ocp4.ministack.dev
+  112  tree letsencrypt/
+  113  clear
+  114  ls
+  115  clear
+  116  history | grep mkdir
+  117  cd letsencrypt/
+  118  ls
+  119  mkdir bak
+  120  mv * bak/
+  121  cd ..
+  122  ls
+  123  mv run-letsencrypt-wildcard-new run-letsencrypt-new-wildcard
+  124  mv run-letsencrypt-dns.sh bak/
+  125  ls
+  126  vim run-letsencrypt-new-wildcard 
+  127  ./run-letsencrypt-new-wildcard 
+  128  vim run-letsencrypt-new-wildcard 
+  129  clear; ./run-letsencrypt-new-wildcard 
+  130  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  131  mv letsencrypt/bak/certbot letsencrypt/
+  132  vim run-letsencrypt-new-wildcard 
+  133  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  134  file /root/letsencrypt/certbot/secrets/google.json
+  135  vim run-letsencrypt-new-wildcard 
+  136  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  137  vim run-letsencrypt-new-wildcard 
+  138  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  139  ls letsencrypt/
+  140  rmdir letsencrypt/ocp4.ministack.dev
+  141  rm letsencrypt/ocp4.ministack.dev -rf
+  142  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  143  ls letsencrypt/
+  144  vim run-letsencrypt-new-wildcard 
+  145  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  146  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  147  vim run-letsencrypt-new-wildcard 
+  148  clear; ./run-letsencrypt-new-wildcard ocp4.ministack.dev
+  149  clear; ./run-letsencrypt-new-wildcard apps.ocp4.ministack.dev
+  150  clear; ./run-letsencrypt-new-wildcard ministack.dev
+  151  tree -L 2 letsencrypt/
+  152  clear; tree -L 3 letsencrypt/
+  153  cat letsencrypt/*/log/*
+  154  clear
+  155  ls
+  156  clear; ll
+  157  history | tee -a haproxy-kingpin-build.log 
+apk update
+apk upgrade
+apk add vim haproxy curl
+rc-update add haproxy
+mkdir /root/bak
+cp /etc/haproxy/haproxy.cfg bak/
+mkdir ssl
+mv ssl/braincraftio.pem ssl/braincraft.io.pem 
+rc-service haproxy reload
+ln -f haproxy.cfg /etc/haproxy/haproxy.cfg 
+vim haproxy.cfg 
+rc-service haproxy reload
+vim haproxy.cfg ; rc-service haproxy reload

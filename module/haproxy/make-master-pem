@@ -1,0 +1,67 @@
+#!/bin/bash
+load_vars () {
+root_CERTSTORE="/root/letsencrypt"
+root_ISSUED="${root_CERTSTORE}/issued"
+root_BUNDLE="${root_CERTSTORE}/bundle"
+certbot_LOGS="${certbot_CERTSTORE}/logs"
+bundle_LOGS="${certbot_LOGS}/bundle.log"
+list_DOMAINS="$(ls ${root_ISSUED})"
+}
+
+##################################################################################
+# Logging Function
+echo_log () {
+  if [[ $1 == "0" ]]; then
+          echo "STAT>> $2 ..."
+  elif [[ $1 == "2" ]]; then
+          echo "WARN>> $2 ..."
+  elif [[ $1 == "1" ]]; then
+          echo "ERROR>> $2"
+          echo "ERROR>> Critical Exiting!"
+          exit 1
+  fi
+}
+
+
+##################################################################################
+# List bundled certificate domains
+list_bundle () {
+  echo_log 0 "Wrote a new bundle with the following certificates:"
+  echo
+  for all in $(ls ${root_BUNDLE}); do
+    openssl crl2pkcs7 -nocrl -certfile ${all} \
+	| openssl pkcs7 -print_certs -text -noout \
+	| grep "Subject: CN=" \
+	| awk -F'=' '{print $2}'
+    echo
+  done
+}
+
+##################################################################################
+cat_bundle () {
+  echo_log 0 "Writing new bundle"
+  for dom in $(ls ${root_ISSUED}); do 
+      cert_NEW="${root_BUNDLE}/bundle.${dom}.pem"
+         echo "" > ${cert_NEW}
+	 echo_log 0 "Loading new cert ${dom} from ${root_ISSUED}/${dom}/active/archive/${dom}/cert1.pem"
+	 cat ${root_ISSUED}/${dom}/active/archive/${dom}/cert1.pem    >> ${cert_NEW} 
+	 cat ${root_ISSUED}/${dom}/active/archive/${dom}/privkey1.pem >> ${cert_NEW} 
+         chmod 644 ${cert_NEW}
+  done
+}
+
+##################################################################################
+run_core () {
+  clear
+  load_vars
+
+  [[   -d ${root_ISSUED} ]] || echo_log 1 "No issued certificates detected!"
+  [[   -d ${root_BUNDLE} ]] || mkdir -p ${root_BUNDLE}
+
+  cat_bundle
+  list_bundle
+
+}
+
+##################################################################################
+run_core
