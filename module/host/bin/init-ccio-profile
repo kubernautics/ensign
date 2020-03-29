@@ -66,18 +66,6 @@ echo "
         mycloud.net
         whiterice.dev"
 read -p '    Base Domain : ' ccio_DOMAINNAME ;
-echo "    
-    Please enter a cluster name which will be appended to the Base Domain
-    This is a unique and arbitrary name which will be appended as a subdomain.
-      Example entry:             
-        cluster
-      Which would append to become:
-        cluster.homelab.lan 
-        cluster.mycloud.net 
-        cluster.whiterice.dev"
-read -p '    username: ' ocp_CLUSTERNAME
-echo ""
-
 prompt_domain_name
 }
 
@@ -118,8 +106,6 @@ ccio_DOMAINNAME="${ccio_DOMAINNAME}"
 export ministack_PWD_SALT="${ministack_PWDSALT}"
 export int_ministack_SUBNET="${int_ministack_SUBNET}"
 export ministack_UNAME="${ministack_UNAME}"
-export ocp_CLUSTERNAME="${ocp_CLUSTERNAME}"
-export ocp_CLUSTERDOMAIN="${ocp_CLUSTERNAME}.${ccio_DOMAINNAME}"
 
 echo '>>>> CCIO Profile Loaded!'
 EOF
@@ -147,7 +133,7 @@ write_append () {
 cat <<EOF >> $1
 # Source profile only for interactive sessions (Fixes qemu+ssh header size error)
 case \$- in *i*)
-        source /etc/ccio/ocp-mini-stack/profile
+        source /etc/ccio/ensign/profile
 esac
 EOF
 }
@@ -158,11 +144,11 @@ append_bashrc () {
   cp ~/.bashrc ~/.bak/.bashrc_$(date +"%s")
 
   # Add profile to /etc/skel/.bashrc file
-  [[ $(grep ocp-mini-stack /etc/skel/.bashrc ; echo $?) == 0 ]] \
+  [[ $(grep ensign /etc/skel/.bashrc ; echo $?) == 0 ]] \
       || write_append "/etc/skel/.bashrc"
 
   # Add profile to .bashrc file
-  [[ $(grep ocp-mini-stack ~/.bashrc ; echo $?) == 0 ]] \
+  [[ $(grep ensign ~/.bashrc ; echo $?) == 0 ]] \
       || write_append "$HOME/.bashrc"
 }
 
@@ -184,7 +170,6 @@ done
 #################################################################################
 run () {
 load_vars
-prompt_ocp_subnet
 prompt_int_subnet
 prompt_provider_uname
 prompt_pwd
