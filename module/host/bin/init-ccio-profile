@@ -1,7 +1,7 @@
 #!/bin/bash
 #################################################################################
 load_vars () {
-project_NAME="ocp-mini-stack"
+project_NAME="ensign"
 base_PATH="/etc/ccio"
 full_PATH="${base_PATH}/${project_NAME}"
 profile_TARGET="${full_PATH}/profile"
@@ -10,17 +10,6 @@ profile_TARGET="${full_PATH}/profile"
 [[ -f ${full_PATH} ]] || mkdir -p ${full_PATH}
 
 clear
-}
-
-#################################################################################
-prompt_ocp_subnet () {
-echo "    Please enter a valid /16 subnet for the 'openshift' network bridge:
-      EG: 172.10.0.0
-      "
-read -p '    Subnet: ' input_SUBNET
-
-ocp_ministack_SUBNET=$(awk -F'[ .]' '{print $1"."$2"."$3}' <(echo ${input_SUBNET}))
-
 }
 
 #################################################################################
@@ -128,11 +117,9 @@ ccio_DOMAINNAME="${ccio_DOMAINNAME}"
 # Mini Stack User Credentials
 export ministack_PWD_SALT="${ministack_PWDSALT}"
 export int_ministack_SUBNET="${int_ministack_SUBNET}"
-export ocp_ministack_SUBNET="${ocp_ministack_SUBNET}"
 export ministack_UNAME="${ministack_UNAME}"
 export ocp_CLUSTERNAME="${ocp_CLUSTERNAME}"
 export ocp_CLUSTERDOMAIN="${ocp_CLUSTERNAME}.${ccio_DOMAINNAME}"
-
 
 echo '>>>> CCIO Profile Loaded!'
 EOF

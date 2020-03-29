@@ -2,6 +2,9 @@
 https://cloud.digitalocean.com/droplets
 https://console.cloud.google.com/net-services/dns/zones&authuser=1&folder&organizationId
 ```
+git clone https://github.com/containercraft/ensign.git ~/ensign
+```
+```
 lxd init
 ```
 ```
