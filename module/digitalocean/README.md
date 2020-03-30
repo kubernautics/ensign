@@ -45,10 +45,13 @@ cluster: null
 sudo apt-get update && sudo apt-get upgrade -y
 ```
 ```
+source ${HOME}/ensign/module/host/bin/init-ccio-profile
 ```
 ```
+apt update && apt upgrade -y && apt dist-upgrade -y && apt autoremove -y
 ```
 ```
+apt install --install-recommends -y vim lnav pastebinit
 ```
 ```
 ```
