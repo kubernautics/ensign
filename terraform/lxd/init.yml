@@ -1,6 +1,6 @@
 config:
   core.https_address: '[::]:8443'
-  core.trust_password: $(echo -n "ensign" | base64 -w0)
+  core.trust_password: $(echo -n "ensign.${ocp_CLUSTERDOMAIN}" | base64 -w0)
 networks:
 - config:
     ipv4.address: auto
