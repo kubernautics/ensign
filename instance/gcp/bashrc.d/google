@@ -1,0 +1,2 @@
+source ${HOME}/google-cloud-sdk/completion.bash.inc
+source ${HOME}/google-cloud-sdk/path.bash.inc

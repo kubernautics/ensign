@@ -1,0 +1,16 @@
+# https://cloud.google.com/free
+# - Get Started Free
+# - Create Account
+# - Add Billing
+# https://console.cloud.google.com/getting-started
+# Instances to test:
+# - f1-micro
+# - e2-micro
+# - e2-small
+# Install gcloud cli
+# - curl https://sdk.cloud.google.com > install.sh
+# - bash install.sh --disable-prompts --install-dir=${HOME}
+# - cp bashrc.d/google ~/.bashrc.d/google
+##################################################################
+# Refrence:
+# https://cloud.google.com/compute/vm-instance-pricing#sharedcore
