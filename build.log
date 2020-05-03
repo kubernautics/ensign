@@ -1,0 +1,4 @@
+https://cloud.digitalocean.com/account/api/tokens
+ - generate new token
+ - create token name (EG: ensign)
+ - Enable scopes: {read,write}
