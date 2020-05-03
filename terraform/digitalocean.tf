@@ -1,17 +1,19 @@
 # -----------------------------------------------------------------------
 # -[Provider: DigitalOcean]----------------------------------------------
 
-variable "digitalocean_token" {}
+variable "digitalocean_token" {
+  description = "DigitalOcean Api Token"
+}
+
 provider "digitalocean" {
-  token = "${var.digitalocean_token}"
+  token = var.digitalocean_token
 }
 
 # -----------------------------------------------------------------------
 # -[Instance Authentication]---------------------------------------------
 
-variable "digitalocean_token" {}
 variable "ssh_key_fingerprint" {
-  token = "${var.digitalocean_fprint}"
+  description = "Fingerprint of the public ssh key stored on DigitalOcean"
 }
 
 variable "ssh_public_key" {
@@ -29,8 +31,8 @@ variable "droplet_size" {
 }
 
 variable "droplet_image" {
-  description = "DigitalOcean droplet image name"
-  default = "ubuntu-20-04-x65"
+  description = "DigitalOcean Ensign Image Name"
+  default = "ubuntu-20-04-x64"
 }
 
 variable private_networking {
@@ -43,8 +45,8 @@ variable private_networking {
 # https://www.digitalocean.com/docs/platform/availability-matrix/
 variable "region" {
   description = "Digital Ocean Region"
-  default = "sfo1"
-# default = "sfo2"
+# default = "sfo1"
+  default = "sfo2"
 # default = "nyc1"
 # default = "nyc2"
 # default = "nyc3"
