@@ -14,3 +14,10 @@ unified ingress and egress of distributed lab and compute resources
   - (SSL Certificate Enrollment & Renewal) HaProxy
   - (Public Key & Public Admin Resources) Apache simple file server
   - (Master Edge Bastion) SSH
+
+###### Sketching steps
+```
+terraform init
+terraform plan
+terraform apply -auto-approve
+```
