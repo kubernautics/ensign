@@ -2,3 +2,7 @@ https://cloud.digitalocean.com/account/api/tokens
  - generate new token
  - create token name (EG: ensign)
  - Enable scopes: {read,write}
+ - Save token to: ~/.ccio/secrets/digitalocean/token
+ - cp credentials file to: ~/.ccio/secrets/digitalocean/credentials
+
+curl -L https://github.com/digitalocean/doctl/releases/download/v1.43.0/doctl-1.43.0-linux-amd64.tar.gz | sudo tar xvzf - --directory /usr/bin/ doctl
