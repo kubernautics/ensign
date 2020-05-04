@@ -8,9 +8,28 @@
 # - e2-micro
 # - e2-small
 # Install gcloud cli
-# - curl https://sdk.cloud.google.com > install.sh
-# - bash install.sh --disable-prompts --install-dir=${HOME}
-# - cp bashrc.d/google ~/.bashrc.d/google
+# - $ curl https://sdk.cloud.google.com > install.sh
+# - $ bash install.sh --disable-prompts --install-dir=${HOME}
+# - $ cp bashrc.d/google ~/.bashrc.d/google
+# - $ gcloud init
+# - open hyperlink provided & login
+# - allow sdk access rights
+# - copy code back into terminal prompt
+# - create new project 
+# - enter new project id name (eg: ministackdev)
+# - open web console to verify (eg: https://console.cloud.google.com/getting-started?project=ministackdev)
+# - open billing console & link new project to billing account (eg: https://console.cloud.google.com/billing/linkedaccount?project=ministackdev)
+# - $ gcloud projects list
+# - $ gcloud config set project ministackdev
+# - $ gcloud services list --available
+# - $ gcloud services list --available | grep -i dns
+# - $ gcloud services list --available | grep -i dns
+# - $ gcloud iam service-accounts create terraform --description="cloudctl terraform iam role" --display-name=terraform --project=ministackdev
+# - $ gcloud iam service-accounts keys create $GOOGLE_APPLICATION_CREDENTIALS --iam-account terraform@ministackdev.iam.gserviceaccount.com
+# - $ gcloud dns managed-zones create --visibility=public --dns-name="ministack.dev" --description="A zone" "ministackdev"
+# - $ gcloud projects add-iam-policy-binding ministackdev --member serviceAccount:terraform@ministackdev.iam.gserviceaccount.com --role roles/admin
+# 
 ##################################################################
 # Refrence:
 # https://cloud.google.com/compute/vm-instance-pricing#sharedcore
+# https://cloud.google.com/dns/docs/migrating << how to migrate DNS to GCP
