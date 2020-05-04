@@ -28,6 +28,8 @@
 # - $ gcloud iam service-accounts keys create $GOOGLE_APPLICATION_CREDENTIALS --iam-account terraform@ministackdev.iam.gserviceaccount.com
 # - $ gcloud dns managed-zones create --visibility=public --dns-name="ministack.dev" --description="A zone" "ministackdev"
 # - $ gcloud projects add-iam-policy-binding ministackdev --member serviceAccount:terraform@ministackdev.iam.gserviceaccount.com --role roles/admin
+# - $ terraform init
+# - $ terraform apply
 # 
 ##################################################################
 # Refrence:
