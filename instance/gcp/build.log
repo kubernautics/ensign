@@ -30,6 +30,8 @@
 # - $ gcloud projects add-iam-policy-binding ministackdev --member serviceAccount:terraform@ministackdev.iam.gserviceaccount.com --role roles/admin
 # - $ terraform init
 # - $ terraform apply
+# - $ ssh `terraform output ip`
+#
 # 
 ##################################################################
 # Refrence:
