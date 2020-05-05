@@ -28,7 +28,7 @@
         mode: '1664'
         recurse: yes
     - file:
-        dest: ~/openwrt/config
+        dest: /home/kmorgan/openwrt/config
         owner: root
         group: ccio
         mode: '1664'
@@ -36,10 +36,18 @@
 #   - name: MSIO | Ensign | Assets | Build Config From Templates
 #     template:
 #       src: '{{ item.src }}'
-#       dest: ~/openwrt/config/{{ item.path }}
+#       dest: /home/kmorgan/openwrt/config/{{ item.path }}
 #       mode: '{{ item.mode }}'
 #     with_filetree: templates/openwrt/
 #     when: item.state == 'file'
+    - name: MSIO | Ensign | Install Podman
+      template:
+        src: "podman.list"
+        dest: "/etc/apt/sources.list.d/podman.list"
+    - name: MSIO | Ensign | Add Podman Repo Key
+      apt_key:
+        url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key
+        state: present
     - name: Write Networkd OVS Bridge Configuration
       template:
         src: "{{ item }}.network"
@@ -52,12 +60,15 @@
         name: "{{ item }}"
         enabled: yes
       with_items:
-        - network
         - openvswitch-switch
     - name: Networking | OpenVSwitch | Build Bridge Internal
       openvswitch_bridge:
         bridge: internal
         state: present
+    - name: MSIO | Ensign | LXD Init
+      shell: lxd init --preseed < templates/lxd.yml
+      args:
+        executable: /bin/bash
     - name: Gateway - Build Profile
       lxd_profile:
         name: openwrt
