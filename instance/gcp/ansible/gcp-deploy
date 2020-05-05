@@ -5,7 +5,18 @@
     - vars/custom.yml
     - vars/main.yml
   tasks:
-  - terraform:
-      project_path: 'terraform/'
-      state: present
-      force_init: true
+    - name: MSIO | Ensign | Detect RunAs User
+      become: false
+      local_action: command whoami
+      register: ansible_user_connected
+
+    - name: MSIO | Ensign | purge known_hosts
+      lineinfile:
+        path: "/home/{{ ansible_user_connected }}/.ssh/known_hosts"
+        regexp: 'ensign'
+        state: absent
+
+    - terraform:
+        project_path: 'terraform/'
+        state: present
+        force_init: true
