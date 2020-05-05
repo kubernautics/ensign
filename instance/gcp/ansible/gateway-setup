@@ -7,6 +7,12 @@
     - vars/custom.yml
     - vars/main.yml
   tasks:
+
+    - name: MSIO | Ensign | Detect RunAs User
+      become: false
+      local_action: command whoami
+      register: ansible_user_connected
+
     - name: MSIO | Ensign | Update Packages
       package:
         name: "*"
@@ -15,32 +21,33 @@
       package:
         name: "{{ packages_base_ubuntu }}"
         state: present
+
     - name: MSIO | Ensign | Create Group 'CCIO'
       group:
         name: ccio
-        gid: 7000
         state: present
-    - name: MSIO | Ensign | Assets | Chown Assets with 'CCIO' Group
+        gid: 7000
+        non_unique: true
+        system: true
+    - name: MSIO | Ensign | Add Running User to Group 'CCIO'
+      user:
+        name: "{{ ansible_user_connected.stdout }}"
+        groups: ccio
+        append: yes
+
+    - name: MSIO | Ensign | Build Assets Directory Tree
       file:
-        dest: /root/.ccio/ocp-mini-stack/module
-        owner: root
+        state: directory
+        owner: "{{ ansible_user_connected.stdout }}"
         group: ccio
-        mode: '1664'
         recurse: yes
-    - file:
-        dest: /home/kmorgan/openwrt/config
-        owner: root
-        group: ccio
-        mode: '1664'
-        recurse: yes
-#   - name: MSIO | Ensign | Assets | Build Config From Templates
-#     template:
-#       src: '{{ item.src }}'
-#       dest: /home/kmorgan/openwrt/config/{{ item.path }}
-#       mode: '{{ item.mode }}'
-#     with_filetree: templates/openwrt/
-#     when: item.state == 'file'
-    - name: MSIO | Ensign | Install Podman
+        mode: '775'
+        path: "{{ item }}"
+      with_items:
+        - "/home/{{ ansible_user_connected.stdout }}/openwrt"
+        - "/home/{{ ansible_user_connected.stdout }}/openwrt/config"
+
+    - name: MSIO | Ensign | Add Podman Repo File
       template:
         src: "podman.list"
         dest: "/etc/apt/sources.list.d/podman.list"
@@ -48,27 +55,73 @@
       apt_key:
         url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key
         state: present
-    - name: Write Networkd OVS Bridge Configuration
+    - name: MSIO | Ensign | Install Podman
+      package:
+        name: "podman"
+        state: present
+
+    - name: MSIO | Ensign | Networking | Enable & Start Networkd + OpenVSwitch
+      service:
+        name: "{{ item }}"
+        enabled: yes
+      with_items:
+        - openvswitch-switch
+    - name: MSIO | Ensign | Networking | Write Networkd OVS Bridge Configuration
       template:
         src: "{{ item }}.network"
         dest: "/etc/systemd/network/{{ item }}.network"
       with_items:
         - mgmt0
         - internal
-    - name: Enable & Start Networkd + OpenVSwitch
-      service:
-        name: "{{ item }}"
-        enabled: yes
-      with_items:
-        - openvswitch-switch
-    - name: Networking | OpenVSwitch | Build Bridge Internal
+    - name: MSIO | Ensign | Networking | Build Bridge & Port | br:'internal' port:'mgmt0'
       openvswitch_bridge:
         bridge: internal
         state: present
+    - openvswitch_port:
+        state: present
+        bridge: internal
+        port: mgmt0
+        set: Interface mgmt0 type=internal
+
+    - name: MSIO | Ensign | Detect Image OpenWRT
+      become_user: root
+      command: "ls /home/{{ ansible_user_connected.stdout }}/openwrt/openwrt-19.07.2-x86-64-lxd.tar.gz"
+      register: wrt
+      ignore_errors: True
+    - name: MSIO | Ensign | Detect Image Fingerprint
+      become_user: root
+      command: "ls /home/{{ ansible_user_connected.stdout }}/openwrt/openwrt_fingerprint.txt"
+      register: wrt_image_fprint
+      ignore_errors: True
+
     - name: MSIO | Ensign | LXD Init
       shell: lxd init --preseed < templates/lxd.yml
-      args:
-        executable: /bin/bash
+      when: "wrt_image_fprint.rc != 0"
+    - name: MSIO | Ensign | Build OpenWRT LXD Image
+      become_user: root
+      shell: "podman run --privileged --rm -it --name openwrt_builder --volume /home/{{ ansible_user_connected.stdout }}/openwrt:/root/bin:z containercraft/ccio-openwrt-builder:19.07.2"
+      when: "wrt.rc != 0"
+    - name: MSIO | Ensign | Import OpenWRT LXD Image
+      become_user: root
+      shell: "lxc image import /home/{{ ansible_user_connected.stdout }}/openwrt/openwrt-19.07.2-x86-64-lxd.tar.gz --alias openwrt/19.07.2/x86_64"
+      when: "wrt_image_fprint.rc != 0"
+    - name: MSIO | Ensign | Stash OpenWRT LXD Image Fingerprint
+      become_user: root
+      shell: "lxc image list --format=csv --columns='lf' | awk -F'[,]' '/openwrt/{print $2}' > /home/{{ ansible_user_connected.stdout }}/openwrt/openwrt_fingerprint.txt"
+      when: "wrt_image_fprint.rc != 0"
+    - file:
+        dest: "/home/{{ ansible_user_connected.stdout }}/openwrt"
+        owner: "{{ ansible_user_connected.stdout }}"
+        group: ccio
+        mode: '755'
+        recurse: yes
+#   - name: MSIO | Ensign | Assets | Build Config From Templates
+#     template:
+#       src: '{{ item.src }}'
+#       dest: "/home/{{ ansible_run_user }}/openwrt/config"
+#       mode: '{{ item.mode }}'
+#     with_filetree: templates/openwrt/
+#     when: item.state == 'file'
     - name: Gateway - Build Profile
       lxd_profile:
         name: openwrt

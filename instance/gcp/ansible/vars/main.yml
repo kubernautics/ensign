@@ -2,6 +2,7 @@ packages_base_ubuntu:
   - tmux
   - htop
   - hostname
+  - podman
   - net-tools
   - wireguard-tools
   - openvswitch-switch
