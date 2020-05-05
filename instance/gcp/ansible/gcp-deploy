@@ -1,0 +1,11 @@
+#!/bin/ansible-playbook
+- name: MSIO | Ensign | Terraform Deploy
+  hosts: localhost
+  vars_files:
+    - vars/custom.yml
+    - vars/main.yml
+  tasks:
+  - terraform:
+      project_path: 'terraform/'
+      state: present
+      force_init: true

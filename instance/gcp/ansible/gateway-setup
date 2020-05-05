@@ -1,8 +1,7 @@
 #!/bin/ansible-playbook
 - name: MSIO | Ensign | https://github.com/ministackio/ensign
-  hosts: localhost
+  hosts: ensign
   become: yes
-  connection: local
   vars_files:
     - vars/custom.yml
     - vars/main.yml
@@ -49,12 +48,15 @@
 
     - name: MSIO | Ensign | Add Podman Repo File
       template:
-        src: "podman.list"
+        src: podman.list
         dest: "/etc/apt/sources.list.d/podman.list"
     - name: MSIO | Ensign | Add Podman Repo Key
       apt_key:
         url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key
         state: present
+    - name: MSIO | Ensign | Apt Update
+      apt:
+        update_cache: yes
     - name: MSIO | Ensign | Install Podman
       package:
         name: "podman"
@@ -94,8 +96,12 @@
       register: wrt_image_fprint
       ignore_errors: True
 
+    - name: MSIO | Ensign | LXD Load init template
+      template:
+        src: lxd.yml
+        dest: "/tmp/lxd.yml"
     - name: MSIO | Ensign | LXD Init
-      shell: lxd init --preseed < templates/lxd.yml
+      shell: lxd init --preseed < /tmp/lxd.yml
       when: "wrt_image_fprint.rc != 0"
     - name: MSIO | Ensign | Build OpenWRT LXD Image
       become_user: root
