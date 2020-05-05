@@ -103,6 +103,14 @@
     - name: MSIO | Ensign | LXD Init
       shell: lxd init --preseed < /tmp/lxd.yml
       when: "wrt_image_fprint.rc != 0"
+    - name: MSIO | Ensign | LXD Set HTTPS Address '[::8443]'
+      shell: lxc config set core.https_address "[::]"
+#     when: "wrt_image_fprint.rc != 0"
+    - name: MSIO | Ensign | LXD Set HTTPS Passwd 'blablabla'
+      shell: lxc config set core.trust_password blablabla
+#     when: "wrt_image_fprint.rc != 0"
+    - name: MSIO | Ensign | LXD Set HTTPS Passwd 'blablabla'
+      shell: lxc remote add ensign ensign.ministack.dev --password blablabla
     - name: MSIO | Ensign | Build OpenWRT LXD Image
       become_user: root
       shell: "podman run --privileged --rm -it --name openwrt_builder --volume /home/{{ ansible_user_connected.stdout }}/openwrt:/root/bin:z containercraft/ccio-openwrt-builder:19.07.2"
@@ -121,13 +129,7 @@
         group: ccio
         mode: '755'
         recurse: yes
-#   - name: MSIO | Ensign | Assets | Build Config From Templates
-#     template:
-#       src: '{{ item.src }}'
-#       dest: "/home/{{ ansible_run_user }}/openwrt/config"
-#       mode: '{{ item.mode }}'
-#     with_filetree: templates/openwrt/
-#     when: item.state == 'file'
+
     - name: Gateway - Build Profile
       lxd_profile:
         name: openwrt
@@ -155,3 +157,13 @@
             source: /home/kmorgan/openwrt/config
             path: /etc/config
             type: disk
+
+    - name: MSIO | Ensign | OpenWRT | Load Gateway Config
+      template:
+        src: "{{ item }}"
+        dest: "/home/{{ ansible_user_connected.stdout }}/openwrt/config/"
+        owner: "{{ ansible_user_connected.stdout }}"
+        group: "ccio"
+        mode: '755'
+      with_fileglob: 
+        - "templates/openwrt/*"

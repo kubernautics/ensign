@@ -17,6 +17,6 @@
         state: absent
 
     - terraform:
-        project_path: 'terraform/'
+        project_path: 'tf/instance/'
         state: present
         force_init: true

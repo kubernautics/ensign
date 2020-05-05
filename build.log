@@ -13,3 +13,8 @@ curl -L $(curl \
 | awk '/linux-amd64.tar.gz/{print $2}' \
 ) | sudo tar xvzf - --directory /usr/bin/ doctl"
 ```
+```
+curl -s https://api.github.com/repos/sl1pm4t/terraform-provider-lxd/releases/latest | jq '.assets | .[] | .browser_download_url' | grep linux_amd64
+curl -L https://github.com/sl1pm4t/terraform-provider-lxd/releases/download/v1.3.0/terraform-provider-lxd_v1.3.0_linux_amd64.zip --output /tmp/terraform.provider.lxd.zip
+7z e /tmp/terraform.provider.lxd.zip -o${HOME}/.terraform.d/plugins/
+```
