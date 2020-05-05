@@ -1,0 +1,7 @@
+packages_base_ubuntu:
+  - tmux
+  - htop
+  - hostname
+  - net-tools
+  - wireguard-tools
+  - openvswitch-switch

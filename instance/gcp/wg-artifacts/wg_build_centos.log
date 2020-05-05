@@ -1,0 +1,81 @@
+clear
+sudo su
+clear
+sudo dnf update -y 
+ip a
+ip r
+ping google.com
+dnf install speedtest -y
+sudo dnf provides speedtest
+clear
+sudo dnf provides pip
+sudo dnf provides pip3
+sudo dnf install python3
+pip3 install speedtest-cli
+sudo pip3 install speedtest-cli
+speedtest
+clear
+sudo dnf install epel-release
+sudo yum copr enable jdoss/wireguard -y
+sudo dnf install wireguard-tools -y
+sudo mkdir -v /etc/wireguard/
+sudo sh -c 'umask 077; touch /etc/wireguard/wg0.conf'
+sudo ls -l /etc/wireguard/wg0.conf
+cd /etc/wireguard/
+sudo sh -c 'umask 077; wg genkey | tee privatekey | wg pubkey > publickey'
+ls -l privatekey publickey
+sudo cat privatekey
+sudo cat publickey
+sudo vi /etc/wireguard/wg0.conf
+ln /etc/wireguard/wg0.conf .
+ls
+sudo vi /etc/firewalld/services/wireguard.xml
+ln /etc/firewalld/services/wireguard.xml ~
+sudo ln /etc/firewalld/services/wireguard.xml ~
+ls
+sudo ln * ~
+sudo firewall-cmd --permanent --add-service=wireguard --zone=public
+sudo firewall-cmd --permanent --zone=public --add-masquerade
+sudo firewall-cmd --reload
+sudo firewall-cmd --list-all
+ls
+sudo vim wg0.conf 
+ip a
+sudo vim wg0.conf 
+sudo firewall-cmd --list-all
+sudo ls /etc/sysctl.d/
+grep ipv /etc/sysctl.d/*
+for i in core.default_qdisc ipv4.tcp_congestion_control ipv4.ip_forward ipv4.conf.default.rp_filter ipv4.conf.all.rp_filter ipv4.tcp_syncookies ; do grep $i /etc/sysctl.d/* ; done
+sed -i 's/net.ipv4.ip_forward=0/net.ipv4.ip_forward=1/g' /etc/sysctl.d/11-gce-network-security.conf
+sudo sed -i 's/net.ipv4.ip_forward=0/net.ipv4.ip_forward=1/g' /etc/sysctl.d/11-gce-network-security.conf
+sudo sysctl -p /etc/sysctl.d/*
+ip a
+sudo firewall-cmd --add-interface=wg0 --zone=internal
+sudo firewall-cmd --permanent --zone=internal --add-masquerade
+sudo systemctl enable wg-quick@wg0
+sudo systemctl start wg-quick@wg0
+sudo systemctl status wg-quick@wg0
+sudo wg
+sudo ip a show wg0
+ip a
+sudo vim wg0.conf 
+reboot
+sudo reboot
+    1  dnf update -y
+    2  sudo yum -y install https://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
+    3  rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org (external link)
+    4  rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org (external link)
+    5  clear
+    6  rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org (external link)
+    7  rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org (external link
+    8  rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+    9  yum install https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm
+   10  yum --enablerepo=elrepo-kernel install kernel-ml
+   11  uname -a
+   12  reboot
+   13  history
+   14  history | tee -a /home/kmorgan/.bash_history 
+clear
+history
+sudo su
+exit

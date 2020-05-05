@@ -18,6 +18,7 @@ variable "hostname" {
 
 variable "instance_os" {
   default = "ubuntu-os-cloud/ubuntu-2004-lts"
+ #default = "centos-cloud/centos-8"
 }
 
 variable "ensign_type" {

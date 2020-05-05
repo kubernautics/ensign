@@ -1,0 +1,16 @@
+[Match]
+Name=mgmt0
+
+[Network]
+DHCP=no
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+Address=192.168.168.2/24
+
+#Address={{ external_address }}/24
+#Gateway={{ external_gateway }}
+#DNS=8.8.8.8
+#DNS=8.8.4.4
+
+[Link]
+#MACAddress=02:49:92:7d:ae:1c

@@ -31,6 +31,9 @@
 # - $ terraform init
 # - $ terraform apply
 # - $ ssh `terraform output ip`
+# - $ gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
+# - Configure Registrar Nameservers with output
+# - ( https://domains.google.com/m/registrar/ministack.dev/dns )
 #
 # 
 ##################################################################

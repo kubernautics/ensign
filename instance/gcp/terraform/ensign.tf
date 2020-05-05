@@ -6,7 +6,7 @@ resource "google_compute_instance" "ensign" {
   hostname        = var.hostname
   machine_type    = var.ensign_type
   can_ip_forward  = true
-  metadata_startup_script = "sudo apt-get update && sudo apt-get upgrade -y"
+  #metadata_startup_script = "sudo apt-get update && sudo apt-get upgrade -y"
   tags                    = ["ensign", "ministackdev", "ssh-service-public"]
 
   boot_disk {
@@ -35,7 +35,9 @@ resource "google_compute_instance" "ensign" {
     ignore_changes = [attached_disk]
   }
   metadata = {
-    ssh-keys = "kmorgan:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys              = "kmorgan:${file("~/.ssh/id_rsa.pub")}"
+    startup-script        = "${module.startup-script-lib.content}"
+    startup-script-custom = file("${path.module}/bin/startup-ubuntu.sh")
   }
 }
 
@@ -51,6 +53,17 @@ resource "google_compute_instance" "ensign" {
 #  disk     = google_compute_disk.volume_ensign_sda.id
 #  instance = google_compute_instance.ensign.id
 #}
+
+resource "google_dns_record_set" "ensign" {
+  name = "ensign.ministack.dev."
+  type = "A"
+  ttl  = 300
+
+  managed_zone = "ministackdev"
+
+  rrdatas = ["${google_compute_instance.ensign.network_interface.0.access_config.0.nat_ip}"]
+
+}
 
 output "public_ipv4" {
   value = google_compute_instance.ensign.network_interface.0.access_config.0.nat_ip
