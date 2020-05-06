@@ -105,12 +105,13 @@
       when: "wrt_image_fprint.rc != 0"
     - name: MSIO | Ensign | LXD Set HTTPS Address '[::8443]'
       shell: lxc config set core.https_address "[::]"
-#     when: "wrt_image_fprint.rc != 0"
+      when: "wrt_image_fprint.rc != 0"
     - name: MSIO | Ensign | LXD Set HTTPS Passwd 'blablabla'
       shell: lxc config set core.trust_password blablabla
-#     when: "wrt_image_fprint.rc != 0"
-    - name: MSIO | Ensign | LXD Set HTTPS Passwd 'blablabla'
-      shell: lxc remote add ensign ensign.ministack.dev --password blablabla
+      when: "wrt_image_fprint.rc != 0"
+    - name: MSIO | Ensign | Add ensign as remote
+      shell: lxc remote add ensign ensign.ministack.dev --password blablabla --accept-certificate
+      ignore_errors: true
     - name: MSIO | Ensign | Build OpenWRT LXD Image
       become_user: root
       shell: "podman run --privileged --rm -it --name openwrt_builder --volume /home/{{ ansible_user_connected.stdout }}/openwrt:/root/bin:z containercraft/ccio-openwrt-builder:19.07.2"
