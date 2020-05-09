@@ -1,0 +1,5 @@
+terraform {
+  backend "local" {
+    path = "/home/{{ ansible_user_connected.stdout }}/.ccio/state/instance/terraform.tfstate"
+  }
+}

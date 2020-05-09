@@ -34,9 +34,14 @@
 # - $ gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
 # - Configure Registrar Nameservers with output
 # - ( https://domains.google.com/m/registrar/ministack.dev/dns )
+# - $ cd ../instance/ ; terraform import google_compute_address.ensign_public_ipv4 projects/ministackdev/regions/us-west3/addresses/ensign-public-ipv4
 #
 # 
 ##################################################################
 # Refrence:
 # https://cloud.google.com/compute/vm-instance-pricing#sharedcore
 # https://cloud.google.com/dns/docs/migrating << how to migrate DNS to GCP
+# #######################################3
+# gcloud services enable dns.googleapis.com --async
+# gcloud services enable iam.googleapis.com --async
+# 

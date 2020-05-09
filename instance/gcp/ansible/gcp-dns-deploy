@@ -1,0 +1,52 @@
+#!/bin/ansible-playbook
+- name: MSIO | Ensign | Terraform Deploy
+  hosts: localhost
+  vars_files:
+    - vars/custom.yml
+    - vars/main.yml
+  tasks:
+    - name: MSIO | Ensign | Detect RunAs User
+      become: false
+      local_action: command whoami
+      register: ansible_user_connected
+
+    - name: MSIO | Ensign | Create Terraform State Directories
+      file:
+        state: directory
+        owner: "{{ ansible_user_connected.stdout }}"
+        group: ccio
+        recurse: yes
+        mode: '775'
+        path: "{{ item }}"
+      with_items:
+        - "/home/{{ ansible_user_connected.stdout }}/.ccio/state/dns"
+        - "/home/{{ ansible_user_connected.stdout }}/.ccio/state/instance"
+        - "/home/{{ ansible_user_connected.stdout }}/.ccio/state/lxd"
+
+    - name: MSIO | Ensign | GCP | DNS | write state template
+      template:
+        src: "{{ item }}"
+        dest: "/home/{{ ansible_user_connected.stdout }}/.ccio/ensign/instance/gcp/ansible/tf/dns/state.tf"
+        owner: "{{ ansible_user_connected.stdout }}"
+        group: "ccio"
+        mode: '755'
+      with_items: 
+        - "templates/tf/dns/terraform.tfstate.j2"
+
+    - name: MSIO | Ensign | GCP | Build GCP IP & DNS Resources
+      terraform:
+        project_path: 'tf/dns/'
+        state: present
+        force_init: true
+       #variables_file: "../../vars/variables.tf"
+
+    - name: MSIO | Ensign | GCP | Detect Google GCP Name Servers
+      shell: gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
+      register: dns_values
+
+    - shell: echo "Configure your domain name registrar to point at the following DNS servers:"
+      register: dns_msg
+
+    - debug: var=dns_msg
+    - debug: var=dns_values
+

@@ -12,6 +12,17 @@
       local_action: command whoami
       register: ansible_user_connected
 
+    - name: MSIO | Ensign | GCP | DNS | write state template
+      delegate_to: localhost
+      template:
+        src: "{{ item }}"
+        dest: "/home/{{ ansible_user_connected.stdout }}/.ccio/ensign/instance/gcp/ansible/tf/lxd/state.tf"
+        owner: "{{ ansible_user_connected.stdout }}"
+        group: "ccio"
+        mode: '755'
+      with_items: 
+        - "templates/tf/lxd/terraform.tfstate.j2"
+
     - name: MSIO | Ensign | Update Packages
       package:
         name: "*"
@@ -96,6 +107,25 @@
       register: wrt_image_fprint
       ignore_errors: True
 
+    - name: MSIO | ENSIGN | ADd localhost as ensign.ministack.dev
+      blockinfile:
+        path: /etc/hosts
+        create: yes
+        block: |
+          {{ ansible_default_ipv4.address }} ensign.ministack.dev ensign
+    - name: MSIO | Ensign | LXD Init
+      shell: hostnamectl set-hostname ensign.ministack.dev
+      when: "wrt_image_fprint.rc != 0"
+
+    - name: MSIO | Ensign | Purge ensign as remote
+      become_user: kmorgan
+      shell: /snap/bin/lxc remote remove ensign
+      ignore_errors: true
+    - file:
+        path: /home/kmorgan/.config/lxc/servercerts
+        state: absent
+      delegate_to: localhost
+
     - name: MSIO | Ensign | LXD Load init template
       template:
         src: lxd.yml
@@ -104,14 +134,17 @@
       shell: lxd init --preseed < /tmp/lxd.yml
       when: "wrt_image_fprint.rc != 0"
     - name: MSIO | Ensign | LXD Set HTTPS Address '[::8443]'
-      shell: lxc config set core.https_address "[::]"
+      shell: lxc config set core.https_address [::]
       when: "wrt_image_fprint.rc != 0"
+      ignore_errors: True
     - name: MSIO | Ensign | LXD Set HTTPS Passwd 'blablabla'
       shell: lxc config set core.trust_password blablabla
-      when: "wrt_image_fprint.rc != 0"
+#     when: "wrt_image_fprint.rc != 0"
+
     - name: MSIO | Ensign | Add ensign as remote
-      shell: lxc remote add ensign ensign.ministack.dev --password blablabla --accept-certificate
-      ignore_errors: true
+      become_user: kmorgan
+      shell: /snap/bin/lxc remote add ensign ensign.ministack.dev --accept-certificate --password 'blablabla'
+
     - name: MSIO | Ensign | Build OpenWRT LXD Image
       become_user: root
       shell: "podman run --privileged --rm -it --name openwrt_builder --volume /home/{{ ansible_user_connected.stdout }}/openwrt:/root/bin:z containercraft/ccio-openwrt-builder:19.07.2"
@@ -168,3 +201,12 @@
         mode: '755'
       with_fileglob: 
         - "templates/openwrt/*"
+
+    - name: MSIO | Ensign | OpenWRT | Build Container Gateway
+      delegate_to: localhost
+      become: false
+      terraform:
+        project_path: 'tf/lxd/'
+       #variables_file: "../../vars/variables.tf"
+        force_init: true
+        state: present

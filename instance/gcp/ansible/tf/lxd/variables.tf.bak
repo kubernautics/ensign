@@ -29,12 +29,13 @@ variable "size_volume_lxd" {
   default = "8"
 }
 
-// https://cloud.google.com/compute/docs/regions-zones
-variable "tfregion" {
+variable "region" {
   default = "us-west3"
   description = "The GCP region to deploy instances into"
+  // https://cloud.google.com/compute/docs/regions-zones
 }
 
-variable "tfzone" {
-  default = "us-west3-a"
+variable "tfstate" {
+  type = string
+#  default = "var.home/.ccio/state/"
 }
