@@ -1,0 +1,6 @@
+nmcli connection add type ovs-interface con-name mgmt1 ifname mgmt1 ip4 192.168.16.2/24 gw4 192.168.16.1 master internal
+
+#mac 02:4c:d3:6e:d2:a0
+#managed yes
+#type ovs-interface
+

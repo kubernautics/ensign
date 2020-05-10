@@ -1,0 +1,27 @@
+config:
+  boot.autostart: "true"
+  linux.kernel_modules: ip6table_filter,iptable_filter,wireguard,ip6_udp_tunnel,udp_tunnel
+  security.privileged: "true"
+description: ""
+devices:
+  enp6s0:
+    name: enp6s0
+    nictype: physical
+    parent: enp6s0
+    type: nic
+  eth1:
+    name: eth1
+    nictype: bridged
+    parent: internal
+    type: nic
+  openwrt-config:
+    path: /etc/config
+    source: /home/kmorgan/openwrt/config
+    type: disk
+  root:
+    path: /
+    pool: default
+    type: disk
+name: openwrt
+used_by:
+- /1.0/instances/gateway

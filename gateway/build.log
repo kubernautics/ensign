@@ -1,0 +1,126 @@
+    1  clear
+    2  sudo apt update -y && sudo apt upgrade -y 
+    3  clear
+    4  sudo . /etc/os-release
+    5  sudo sh -c "echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
+    6  curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key | sudo apt-key add -
+    7  sudo apt-get update -qq
+    8  sudo apt-get -qq -y install podman
+    9  clear
+   10  ls
+   11  lxc image import openwrt/openwrt-19.07.2-x86-64-lxd.tar.gz --alias openwrt
+   12  lxd init --auto
+   13  sudo lxd init --auto
+   14  sudo  -aG lxd kmorgan
+   15  sudo usermod -aG lxd kmorgan
+   16  exit
+   17  clear; lxc list
+   18  lxc image import openwrt/openwrt-19.07.2-x86-64-lxd.tar.gz --alias openwrt
+   19  clear
+   20  lxc image list
+   21  clear
+   22  cd openwrt/config/
+   23  ls
+   24  vim dhcp 
+   25  vim firewall 
+   26  ip a
+   27  clear
+   28  ls
+   29  vim network 
+   30  sudo shutdown -h now
+   31  clear
+   32  ip a
+   33  vim /etc/netplan/50-cloud-init.yaml 
+   34  vim mgmt0
+   35  cat <<EOF >/etc/systemd/network/internal.network
+   36  [Match]
+   37  Name=internal
+   38  [Network]
+   39  DHCP=no
+   40  IPv6AcceptRA=no
+   41  LinkLocalAddressing=no
+   42  EOF
+   43  sudo cat <<EOF >/etc/systemd/network/internal.network
+   44  [Match]
+   45  Name=internal
+   46  [Network]
+   47  DHCP=no
+   48  IPv6AcceptRA=no
+   49  LinkLocalAddressing=no
+   50  EOF
+   51  sudo su
+   52  clear
+   53  sudo cp /etc/systemd/network/mgmt0.network .
+   54  sudo cp /etc/systemd/network/internal.network .
+   55  sudo su
+   56  clear
+   57  sudo apt-get install openvswitch-vswitchd
+   58  sudo apt-get install openvswitch-vswitch
+   59  sudo apt update sudo apt-get install openvswitch-vswitch
+   60  sudo apt update sudo apt-get install openvswitch-switch
+   61  sudo apt-get install openvswitch-switch
+   62  sudo systemctl enable --now openvswitch-switch
+   63  sudo systemctl enable systemd-networkd
+   64  clear
+   65  lxc profile list
+   66  lxc profile copy default original
+   67  clear
+   68  lxc profile create openwrt
+   69  lxc profile edit openwrt < /home/kmorgan/openwrt/openwrt.yaml 
+   70  lxc profile edit openwrt 
+   71  ip a
+   72  lxc profile edit openwrt 
+   73  lxc init openwrt gateway -p openwrt
+   74  lxc config set gateway boot.autostart true
+   75  lxc config set gateway boot.autostart.delay 10
+   76  lxc profile edit openwrt
+   77  reboot
+   78  sudo reboot
+   79  ip a
+   80  clear
+   81  lxc list
+   82  lxc start gateway
+   83  ovs-vsctl add-br internal
+   84  sudo ovs-vsctl add-br internal
+   85  sudo ovs-vsctl add-port mgmt0 -- set interface mgmt0 type=internal
+   86  sudo ovs-vsctl add-port internal mgmt0 -- set interface mgmt0 type=internal
+   87  reboot
+   88  sudo reboot
+   89  clear
+   90  ip a
+   91  exit
+   92  ip a
+   93  lxc list
+   94  clear
+   95  lxc list
+   96  lxc start gateway
+   97  ip a s mgmt0
+   98  lxc profile edit openwrt
+   99  lxc profile device add openwrt eth0 nic nictype=physical parent=
+  100  ip a s enp6s0
+  101  lxc profile device add openwrt enp6s0 nic nictype=physical parent=enp6s0 name=enp6s0
+  102  lxc start gateway
+  103  lxc list
+  104  clear
+  105  ls
+  106  cd openwrt/
+  107  ls
+  108  cd config/
+  109  clear
+  110  grep eth0
+  111  grep eth0 *
+  112  vim network 
+  113  lxc list
+  114  lxc exec gateway ash
+  115  lxc config edit gateway
+  116  clear
+  117  ip a
+  118  clear; lxc list
+  119  lxc config edit gateway
+  120  lxc exec gateway ash
+  121  clear
+  122  exit
+  123  sudo apt-get install speedtest-cli -y
+  124  speedtest
+  125  clear
+  126  history > openwrt/build.log

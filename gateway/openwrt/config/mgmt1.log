@@ -1,0 +1,12 @@
+GENERAL.DEVICE:                         mgmt1
+GENERAL.TYPE:                           openvswitch
+GENERAL.HWADDR:                         02:4C:D3:6E:D2:A0
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          10 (unmanaged)
+GENERAL.CONNECTION:                     --
+GENERAL.CON-PATH:                       --
+IP4.GATEWAY:                            --
+IP6.ADDRESS[1]:                         fe80::4c:d3ff:fe6e:d2a0/64
+IP6.GATEWAY:                            --
+IP6.ROUTE[1]:                           dst = ff00::/8, nh = ::, mt = 256, table=255
+IP6.ROUTE[2]:                           dst = fe80::/64, nh = ::, mt = 256

@@ -1,0 +1,8 @@
+architecture: "x86_64"
+creation_date: 1588987857
+properties:
+ architecture: "x86_64"
+ description: "OpenWrt 19.07.2 r10947-65030d81f3"
+ os: "OpenWrt"
+ release: "19.07.2"
+templates:
