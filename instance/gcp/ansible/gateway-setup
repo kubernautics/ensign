@@ -11,26 +11,11 @@
       become: false
       local_action: command whoami
       register: ansible_user_connected
-
-    - name: MSIO | Ensign | GCP | DNS | write state template
+    - name: MSIO | Ensign | Purge Old LXD Certs
+      file:
+        path: "/home/{{ ansible_user_connected.stdout }}/.config/lxc/servercerts"
+        state: absent
       delegate_to: localhost
-      template:
-        src: "{{ item }}"
-        dest: "/home/{{ ansible_user_connected.stdout }}/.ccio/ensign/instance/gcp/ansible/tf/lxd/state.tf"
-        owner: "{{ ansible_user_connected.stdout }}"
-        group: "ccio"
-        mode: '755'
-      with_items: 
-        - "templates/tf/lxd/terraform.tfstate.j2"
-
-    - name: MSIO | Ensign | Update Packages
-      package:
-        name: "*"
-        state: latest
-    - name: MSIO | Ensign | Install Packages
-      package:
-        name: "{{ packages_base_ubuntu }}"
-        state: present
 
     - name: MSIO | Ensign | Create Group 'CCIO'
       group:
@@ -45,6 +30,17 @@
         groups: ccio
         append: yes
 
+    - name: MSIO | Ensign |  write state plugin template
+      delegate_to: localhost
+      template:
+        src: "{{ item }}"
+        dest: "/home/{{ ansible_user_connected.stdout }}/.ccio/ensign/instance/gcp/ansible/tf/lxd/state.tf"
+        owner: "{{ ansible_user_connected.stdout }}"
+        group: "ccio"
+        mode: '755'
+      with_items: 
+        - "templates/tf/lxd/terraform.tfstate.j2"
+
     - name: MSIO | Ensign | Build Assets Directory Tree
       file:
         state: directory
@@ -56,21 +52,67 @@
       with_items:
         - "/home/{{ ansible_user_connected.stdout }}/openwrt"
         - "/home/{{ ansible_user_connected.stdout }}/openwrt/config"
-
-    - name: MSIO | Ensign | Add Podman Repo File
+        - "/etc/ccio/"
+        - "/etc/ccio/bin"
+        - "/etc/ccio/start.d"
+    - name: MSIO | Ensign | OpenWRT | Load Gateway Config
       template:
-        src: podman.list
-        dest: "/etc/apt/sources.list.d/podman.list"
-    - name: MSIO | Ensign | Add Podman Repo Key
+        src: "{{ item }}"
+        dest: "/home/{{ ansible_user_connected.stdout }}/openwrt/config/"
+        owner: "{{ ansible_user_connected.stdout }}"
+        group: "ccio"
+        mode: '755'
+      with_fileglob: 
+        - "templates/openwrt/*"
+    - name: MSIO | Ensign | CCIO | Write CCIO Systemd Network Configuration
+      delegate_to: localhost
+      template:
+        src: "{{ item.name }}"
+        dest: "{{ item.dest }}"
+        mode: "{{ item.mode }}"
+        owner: "root"
+        group: "ccio"
+      loop: 
+        - { mode: '755', name: '00-net-variables.j2', dest: '/etc/ccio/start.d/00-net-variables'}
+        - { mode: '755', name: '01-ovs-internal.j2', dest: '/etc/ccio/start.d/02-ovs-internal'}
+        - { mode: '755', name: '02-mgmt1.j2', dest: '/etc/ccio/start.d/02-mgmt1'}
+        - { mode: '755', name: 'podman.list.j2', dest: '/etc/apt/sources.list.d/podman.list'}
+        - { mode: '755', name: 'resolved.conf.j2', dest: '/etc/systemd/resolved.conf'}
+        - { mode: '755', name: 'ccio.service.j2', dest: '/etc/systemd/system/ccio.service'}
+        - { mode: '755', name: 'ccio.sh.j2', dest: '/etc/ccio/bin/ccio'}
+        - { mode: '755', name: 'ovs-clear.j2', dest: '/usr/bin/ovs-clear'}
+        - { mode: '755', name: 'lxd.yml.j2', dest: '/tmp/lxd.yml'}
+        - { mode: '755', name: '', dest: ''}
+        - { mode: '755', name: '', dest: ''}
+        - { mode: '755', name: '', dest: ''}
+        - { mode: '755', name: '', dest: ''}
+
+    - name: MSIO | Ensign | SystemCTL Daemon Reload
+      shell: systemctl daemon-reload
+
+    - name: MSIO | Ensign | LXD Init
+      shell: hostnamectl set-hostname ensign.ministack.dev
+    - name: MSIO | ENSIGN | Add localhost as ensign.ministack.dev
+      blockinfile:
+        path: /etc/hosts
+        create: yes
+        block: |
+          {{ ansible_default_ipv4.address }} ensign.ministack.dev ensign
+
+    - name: MSIO | Ensign | Apt | Add Podman Repo Key
       apt_key:
-        url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key
+        url: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key"
         state: present
     - name: MSIO | Ensign | Apt Update
       apt:
         update_cache: yes
-    - name: MSIO | Ensign | Install Podman
+    - name: MSIO | Ensign | Apt | Update Packages
       package:
-        name: "podman"
+        name: "*"
+        state: latest
+    - name: MSIO | Ensign | Apt | Install Packages
+      package:
+        name: "{{ packages_base_ubuntu }}"
         state: present
 
     - name: MSIO | Ensign | Networking | Enable & Start Networkd + OpenVSwitch
@@ -79,22 +121,17 @@
         enabled: yes
       with_items:
         - openvswitch-switch
-    - name: MSIO | Ensign | Networking | Write Networkd OVS Bridge Configuration
-      template:
-        src: "{{ item }}.network"
-        dest: "/etc/systemd/network/{{ item }}.network"
-      with_items:
-        - mgmt0
-        - internal
-    - name: MSIO | Ensign | Networking | Build Bridge & Port | br:'internal' port:'mgmt0'
+        - ccio
+
+    - name: MSIO | Ensign | Networking | Build Bridge & Port | br:'internal' port:'mgmt1'
       openvswitch_bridge:
         bridge: internal
         state: present
     - openvswitch_port:
         state: present
         bridge: internal
-        port: mgmt0
-        set: Interface mgmt0 type=internal
+        port: mgmt1
+        set: Interface mgmt1 type=internal
 
     - name: MSIO | Ensign | Detect Image OpenWRT
       become_user: root
@@ -107,29 +144,6 @@
       register: wrt_image_fprint
       ignore_errors: True
 
-    - name: MSIO | ENSIGN | ADd localhost as ensign.ministack.dev
-      blockinfile:
-        path: /etc/hosts
-        create: yes
-        block: |
-          {{ ansible_default_ipv4.address }} ensign.ministack.dev ensign
-    - name: MSIO | Ensign | LXD Init
-      shell: hostnamectl set-hostname ensign.ministack.dev
-      when: "wrt_image_fprint.rc != 0"
-
-    - name: MSIO | Ensign | Purge ensign as remote
-      become_user: kmorgan
-      shell: /snap/bin/lxc remote remove ensign
-      ignore_errors: true
-    - file:
-        path: /home/kmorgan/.config/lxc/servercerts
-        state: absent
-      delegate_to: localhost
-
-    - name: MSIO | Ensign | LXD Load init template
-      template:
-        src: lxd.yml
-        dest: "/tmp/lxd.yml"
     - name: MSIO | Ensign | LXD Init
       shell: lxd init --preseed < /tmp/lxd.yml
       when: "wrt_image_fprint.rc != 0"
@@ -139,10 +153,14 @@
       ignore_errors: True
     - name: MSIO | Ensign | LXD Set HTTPS Passwd 'blablabla'
       shell: lxc config set core.trust_password blablabla
-#     when: "wrt_image_fprint.rc != 0"
+      when: "wrt_image_fprint.rc != 0"
 
+    - name: MSIO | Ensign | Purge ensign as remote 
+      become_user: "{{ ansible_user_connected.stdout }}"
+      shell: /snap/bin/lxc remote remove ensign
+      ignore_errors: true
     - name: MSIO | Ensign | Add ensign as remote
-      become_user: kmorgan
+      become_user: "{{ ansible_user_connected.stdout }}"
       shell: /snap/bin/lxc remote add ensign ensign.ministack.dev --accept-certificate --password 'blablabla'
 
     - name: MSIO | Ensign | Build OpenWRT LXD Image
@@ -157,21 +175,19 @@
       become_user: root
       shell: "lxc image list --format=csv --columns='lf' | awk -F'[,]' '/openwrt/{print $2}' > /home/{{ ansible_user_connected.stdout }}/openwrt/openwrt_fingerprint.txt"
       when: "wrt_image_fprint.rc != 0"
-    - file:
-        dest: "/home/{{ ansible_user_connected.stdout }}/openwrt"
-        owner: "{{ ansible_user_connected.stdout }}"
-        group: ccio
-        mode: '755'
-        recurse: yes
+
+    - name: MSIO | Ensign | LXD Backup Default Profile
+      shell: lxc profile copy default original
 
     - name: Gateway - Build Profile
       lxd_profile:
         name: openwrt
         state: present
         config: 
-          linux.kernel_modules: ip6table_filter,iptable_filter,wireguard,ip6_udp_tunnel,udp_tunnel
-          security.privileged: "true"
           boot.autostart: "true"
+          boot.autostart.delay: "3"
+          security.privileged: "true"
+          linux.kernel_modules: ip6table_filter,iptable_filter,wireguard,ip6_udp_tunnel,udp_tunnel
         devices:
           eth0:
             name: eth0
@@ -188,25 +204,34 @@
             pool: default
             type: disk
           openwrt-config:
-            source: /home/kmorgan/openwrt/config
+            source: "/home/{{ ansible_user_connected.stdout }}/openwrt/config"
             path: /etc/config
             type: disk
 
-    - name: MSIO | Ensign | OpenWRT | Load Gateway Config
-      template:
-        src: "{{ item }}"
-        dest: "/home/{{ ansible_user_connected.stdout }}/openwrt/config/"
-        owner: "{{ ansible_user_connected.stdout }}"
-        group: "ccio"
-        mode: '755'
-      with_fileglob: 
-        - "templates/openwrt/*"
-
-    - name: MSIO | Ensign | OpenWRT | Build Container Gateway
+    - name: MSIO | Ensign | Terraform | OpenWRT | Build Container Gateway
       delegate_to: localhost
       become: false
       terraform:
         project_path: 'tf/lxd/'
-       #variables_file: "../../vars/variables.tf"
         force_init: true
         state: present
+
+    - name: MSIO | ENSIGN | Add localhost as ensign.ministack.dev
+      blockinfile:
+        path: /etc/hosts
+        create: yes
+        block: |
+          192.168.16.2 ensign.ministack.dev ensign
+
+    - name: MSIO | Ensign | Gateway | LXD Stop Gateway
+      shell: lxc stop gateway
+    - pause:
+        seconds: 6
+
+    - name: MSIO | Ensign | Gateway | LXD Set 'eth0' tyep=physical
+      shell: lxc profile device set openwrt eth0 nictype physical
+    - name: MSIO | Ensign | Gateway | LXD Set 'eth0' parent="{{ ansible_default_ipv4.interface }}"
+      shell: lxc profile device set openwrt eth0 parent "{{ ansible_default_ipv4.interface }}"
+    - name: MSIO | Ensign | Gateway | LXD Set 'eth0' parent="{{ ansible_default_ipv4.interface }}"
+      shell: lxc profile device set openwrt eth0 name "{{ ansible_default_ipv4.interface }}"
+
