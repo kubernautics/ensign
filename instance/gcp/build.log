@@ -35,6 +35,8 @@
 # - Configure Registrar Nameservers with output
 # - ( https://domains.google.com/m/registrar/ministack.dev/dns )
 # - $ cd ../instance/ ; terraform import google_compute_address.ensign_public_ipv4 projects/ministackdev/regions/us-west3/addresses/ensign-public-ipv4
+# - $ gcloud compute --project=ministackdev instances get-serial-port-output ensign --zone=us-west3-a
+#
 #
 # 
 ##################################################################

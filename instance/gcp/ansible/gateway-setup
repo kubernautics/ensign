@@ -20,14 +20,19 @@
     - name: MSIO | Ensign | Create Group 'CCIO'
       group:
         name: ccio
-        state: present
         gid: 7000
-        non_unique: true
         system: true
+        state: present
+        non_unique: true
+    - name: MSIO | Ensign | Create Group 'LXD'
+      group:
+        name: lxd
+        system: true
+        state: present
     - name: MSIO | Ensign | Add Running User to Group 'CCIO'
       user:
         name: "{{ ansible_user_connected.stdout }}"
-        groups: ccio
+        groups: ccio,lxd
         append: yes
 
     - name: MSIO | Ensign |  write state plugin template
@@ -149,6 +154,9 @@
     - name: MSIO | Ensign | LXD Set HTTPS Passwd 'blablabla'
       shell: lxc config set core.trust_password blablabla
       when: "wrt_image_fprint.rc != 0"
+    - name: MSIO | Ensign | LXD Backup Default Profile
+      shell: lxc profile copy default original
+      when: "wrt_image_fprint.rc != 0"
 
     - name: MSIO | Ensign | Purge ensign as remote 
       become_user: "{{ ansible_user_connected.stdout }}"
@@ -170,9 +178,6 @@
       become_user: root
       shell: "lxc image list --format=csv --columns='lf' | awk -F'[,]' '/openwrt/{print $2}' > /home/{{ ansible_user_connected.stdout }}/openwrt/openwrt_fingerprint.txt"
       when: "wrt_image_fprint.rc != 0"
-
-    - name: MSIO | Ensign | LXD Backup Default Profile
-      shell: lxc profile copy default original
 
     - name: Gateway - Build Profile
       lxd_profile:
@@ -202,6 +207,7 @@
             source: "/home/{{ ansible_user_connected.stdout }}/openwrt/config"
             path: /etc/config
             type: disk
+      when: "wrt_image_fprint.rc != 0"
 
     - name: MSIO | Ensign | Terraform | OpenWRT | Build Container Gateway
       delegate_to: localhost
@@ -223,10 +229,22 @@
     - pause:
         seconds: 6
 
-    - name: MSIO | Ensign | Gateway | LXD Set 'eth0' tyep=physical
+    - name: MSIO | Ensign | Gateway | LXD Set 'eth0' type=physical
       shell: lxc profile device set openwrt eth0 nictype physical
     - name: MSIO | Ensign | Gateway | LXD Set 'eth0' parent="{{ ansible_default_ipv4.interface }}"
       shell: lxc profile device set openwrt eth0 parent "{{ ansible_default_ipv4.interface }}"
     - name: MSIO | Ensign | Gateway | LXD Set 'eth0' parent="{{ ansible_default_ipv4.interface }}"
       shell: lxc profile device set openwrt eth0 name "{{ ansible_default_ipv4.interface }}"
 
+    - name: MSIO | Ensign | Host | Reboot and wait for it to restart
+      reboot:
+        msg: "Reboot initiated by Ansible"
+        connect_timeout: 5
+        reboot_timeout: 600
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: whoami
+
+    - name: MSIO | Ensign | STATUS Complete!
+      debug:
+        msg: Ensign Gateway Configuration & Network Handoff Complete!

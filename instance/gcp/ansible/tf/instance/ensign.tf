@@ -34,10 +34,18 @@ resource "google_compute_instance" "ensign" {
     ignore_changes = [attached_disk]
   }
   metadata = {
-    ssh-keys              = "kmorgan:${file("~/.ssh/id_rsa.pub")}"
-    startup-script        = "${module.startup-script-lib.content}"
-    startup-script-custom = file("${path.module}/bin/startup-ubuntu.sh")
+    serial-port-logging-enable = "TRUE"
+    ssh-keys                   = "kmorgan:${file("~/.ssh/id_rsa.pub")}"
+    startup-script             = "${module.startup-script-lib.content}"
+    startup-script-custom      = file("${path.module}/bin/startup-ubuntu.sh")
   }
+}
+
+data "google_compute_instance_serial_port" "serial" {
+  instance = google_compute_instance.ensign.name
+  project         = var.project_name
+  zone            = var.tfzone
+  port = 1
 }
 
 output "public_ipv4" {
