@@ -145,7 +145,7 @@ config redirect
 # port redirect of remapped ssh port (22001) on wan
 config redirect
 	option src		wan
-	option src_dport	22001
+	option src_dport	22
 	option dest		lan
 	option dest_ip		192.168.16.2
 	option dest_port	22

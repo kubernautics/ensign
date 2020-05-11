@@ -17,6 +17,7 @@ config interface 'wan'
 	option proto 'static'
         option peerdns '0'
         option dns '8.8.8.8 8.8.4.4'
+	option netmask '255.255.255.0'
         option ipaddr '{{ ansible_default_ipv4.address }}'
         option gateway '{{ ansible_default_ipv4.gateway }}'
 

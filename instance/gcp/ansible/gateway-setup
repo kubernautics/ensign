@@ -65,7 +65,6 @@
       with_fileglob: 
         - "templates/openwrt/*"
     - name: MSIO | Ensign | CCIO | Write CCIO Systemd Network Configuration
-      delegate_to: localhost
       template:
         src: "{{ item.name }}"
         dest: "{{ item.dest }}"
@@ -82,10 +81,6 @@
         - { mode: '755', name: 'ccio.sh.j2', dest: '/etc/ccio/bin/ccio'}
         - { mode: '755', name: 'ovs-clear.j2', dest: '/usr/bin/ovs-clear'}
         - { mode: '755', name: 'lxd.yml.j2', dest: '/tmp/lxd.yml'}
-        - { mode: '755', name: '', dest: ''}
-        - { mode: '755', name: '', dest: ''}
-        - { mode: '755', name: '', dest: ''}
-        - { mode: '755', name: '', dest: ''}
 
     - name: MSIO | Ensign | SystemCTL Daemon Reload
       shell: systemctl daemon-reload
