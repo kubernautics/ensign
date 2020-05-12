@@ -189,6 +189,9 @@
           security.privileged: "true"
           linux.kernel_modules: ip6table_filter,iptable_filter,wireguard,ip6_udp_tunnel,udp_tunnel
         devices:
+          tun:
+            path: /dev/net/tun
+            type: unix-char
           eth0:
             name: eth0
             nictype: bridged
