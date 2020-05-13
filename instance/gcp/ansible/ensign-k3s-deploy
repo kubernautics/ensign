@@ -23,7 +23,9 @@
 #   - debug: var=tf_run.outputs.public_ipv4.value
 
 - name: MSIO | Ensign | K3s Deploy
-  hosts: '{{ tf_run.outputs.public_ipv4.value }}'
+  hosts: ensign
+  host_ip: '{{ tf_run.outputs.public_ipv4.value }}'
+  gather_facts: True
   tasks:
     - name: MSIO | Ensign | k3s | Add /usr/local/bin to system-wide $PATH.
       become: true
