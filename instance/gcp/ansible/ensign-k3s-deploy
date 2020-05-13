@@ -5,7 +5,7 @@
 #        docker-ce \
 #        container-selinux \
 #        selinux-policy-base \
-#	"
+#	 "
 #sudo dnf install -y ${pkgListDnf}
 #sudo systemctl enable --now docker
 #sudo systemctl disable --now firewalld
