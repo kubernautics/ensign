@@ -35,7 +35,7 @@ variable "region" {
   // https://cloud.google.com/compute/docs/regions-zones
 }
 
-variable "tfstate" {
-  type = string
+#variable "tfstate" {
+#  type = string
 #  default = "var.home/.ccio/state/"
-}
+#}

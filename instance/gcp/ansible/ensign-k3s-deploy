@@ -1,0 +1,58 @@
+#!/bin/ansible-playbook --inventory=inventory
+#urlK3sSelinux="https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm"
+#urlContainerd="https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm"
+#pkgListDnf="\
+#        docker-ce \
+#        container-selinux \
+#        selinux-policy-base \
+#	"
+#sudo dnf install -y ${pkgListDnf}
+#sudo systemctl enable --now docker
+#sudo systemctl disable --now firewalld
+#sudo curl -sfL https://get.k3s.io | sh -
+#echo 'export PATH="$PATH:/usr/local/bin"' >> ${HOME}/.bashrc
+#sudo cp -f ${HOME}/.bashrc /root/.bashrc
+#sudo mkdir /root/.kube 2>/dev/null
+#sudo cp /etc/rancher/k3s/k3s.yaml /root/.kube/config
+
+- name: MSIO | Ensign | K3s Prep
+  hosts: localhost
+  vars_files:
+    - vars/custom.yml
+    - vars/main.yml
+  tasks:
+    - name: MSIO | Ensign | Detect RunAs User
+      become: false
+      local_action: command whoami
+      register: ansible_user_connected
+
+    - name: MSIO | Ensign | GCP | Build Instance
+      terraform:
+        project_path: 'tf/instance/'
+        state: present
+        force_init: true
+      register: tf_run
+#   - debug: var=tf_run.outputs.public_ipv4.value
+
+- name: MSIO | Ensign | K3s Deploy
+  hosts: '{{ tf_run.outputs.public_ipv4.value }}'
+  tasks:
+    - name: MSIO | Ensign | k3s | Add /usr/local/bin to system-wide $PATH.
+      become: true
+      copy:
+        dest: /etc/profile.d/path-usr-local-bin.sh
+        content: 'PATH=$PATH:/usr/local/bin'
+
+    - name: MSIO | Ensign | k3s | Add Yum Repository Docker CE
+      yum_repository:
+        name: docker-ce
+        description: Docker CE
+        baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+        gpgcheck: no
+        enabled: yes
+
+    - name: MSIO | Ensign | k3s | Add Yum Repository EPEL
+      yum_repository:
+        name: epel
+        description: EPEL YUM repo
+        baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/

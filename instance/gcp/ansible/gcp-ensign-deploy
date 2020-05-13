@@ -1,4 +1,4 @@
-#!/bin/ansible-playbook
+#!/bin/ansible-playbook --inventory=hosts.yml
 - name: MSIO | Ensign | Terraform Deploy
   hosts: localhost
   vars_files:
@@ -12,8 +12,8 @@
 
     - name: MSIO | Ensign | purge known_hosts
       lineinfile:
-        path: "/home/{{ ansible_user_connected }}/.ssh/known_hosts"
-        regexp: 'ensign'
+        dest: "/home/{{ ansible_user_connected.stdout }}/.ssh/known_hosts"
+        regexp: ensign
         state: absent
 
     - name: MSIO | Ensign | GCP | DNS | write state template
@@ -29,17 +29,16 @@
       args:
         chdir: 'tf/instance/'
 
-    - name: MSIO | Ensign | GCP | Import ensign public IP `ensign_public_ipv4`
-      shell: terraform import google_compute_address.ensign_public_ipv4 projects/ministackdev/regions/us-west3/addresses/ensign-public-ipv4
-      args:
-        chdir: 'tf/instance/'
-      ignore_errors: True
-      register: ensign_public_ipv4
-    - debug: var=ensign_public_ipv4
+#   - name: MSIO | Ensign | GCP | Import ensign public IP `ensign_public_ipv4`
+#     shell: terraform import google_compute_address.ensign_public_ipv4 projects/ministackdev/regions/us-west3/addresses/ensign-public-ipv4
+#     args:
+#       chdir: 'tf/instance/'
+#     ignore_errors: True
 
     - name: MSIO | Ensign | GCP | Build Instance
       terraform:
         project_path: 'tf/instance/'
-       #variables_file: "../../vars/variables.tf"
         state: present
         force_init: true
+      register: tf_run
+    - debug: var=tf_run.outputs.public_ipv4.value

@@ -1,6 +1,3 @@
-resource "google_compute_address" "primary_public_ipv4" {
-  name = "primary-public-ipv4"
-}
 
 resource "google_compute_instance" "ensign" {
 
@@ -37,8 +34,21 @@ resource "google_compute_instance" "ensign" {
     serial-port-logging-enable = "TRUE"
     ssh-keys                   = "kmorgan:${file("~/.ssh/id_rsa.pub")}"
     startup-script             = "${module.startup-script-lib.content}"
-    startup-script-custom      = file("${path.module}/bin/startup-ubuntu.sh")
+    startup-script-custom      = file("${path.module}/bin/startup-centos.sh")
   }
+}
+
+resource "google_compute_address" "primary_public_ipv4" {
+  name = "primary-public-ipv4"
+}
+
+resource "google_dns_record_set" "ensign" {
+  name = "ensign.ministack.dev."
+  type = "A"
+  ttl  = 300
+  managed_zone = "ministackdev"
+  rrdatas = ["${google_compute_address.primary_public_ipv4.address}"]
+  //rrdatas = ["${google_compute_address.primary-public-ipv4.network_interface.0.access_config.0.nat_ip}"]
 }
 
 data "google_compute_instance_serial_port" "serial" {

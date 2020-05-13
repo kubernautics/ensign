@@ -1,4 +1,4 @@
-#!/bin/ansible-playbook
+#!/bin/ansible-playbook --inventory=inventory
 - name: MSIO | Ensign | https://github.com/ministackio/ensign
   hosts: ensign
   become: yes

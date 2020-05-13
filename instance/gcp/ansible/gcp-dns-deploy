@@ -1,4 +1,4 @@
-#!/bin/ansible-playbook
+#!/bin/ansible-playbook --inventory=inventory
 - name: MSIO | Ensign | Terraform Deploy
   hosts: localhost
   vars_files:
@@ -43,10 +43,5 @@
     - name: MSIO | Ensign | GCP | Detect Google GCP Name Servers
       shell: gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
       register: dns_values
-
-    - shell: echo "Configure your domain name registrar to point at the following DNS servers:"
-      register: dns_msg
-
-    - debug: var=dns_msg
     - debug: var=dns_values
 
