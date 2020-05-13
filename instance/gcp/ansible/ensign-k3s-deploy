@@ -28,8 +28,17 @@
         hostname: '{{ tf_run.outputs.public_ipv4.value }}'
         groups: ensign.gcp
 
+    - name: MSIO | Ensign | purge known_hosts
+      lineinfile:
+        dest: "/home/{{ ansible_user_connected.stdout }}/.ssh/known_hosts"
+        regexp: '{{ tf_run.outputs.public_ipv4.value }}'
+        state: absent
+
 - name: MSIO | Ensign | K3s Deploy
   hosts: ensign.gcp
+  vars_files:
+    - vars/custom.yml
+    - vars/main.yml
   become: true
   tasks:
     - name: MSIO | Ensign | k3s | Add /usr/local/bin to system-wide $PATH.
@@ -37,31 +46,84 @@
         dest: /etc/profile.d/path-usr-local-bin.sh
         content: 'PATH=$PATH:/usr/local/bin'
 
-    - name: MSIO | Ensign | k3s | Add Yum Repository Docker CE
-      yum_repository:
-        name: docker-ce
-        description: Docker CE
-        baseurl: https://download.docker.com/linux/centos/docker-ce.repo
-        gpgcheck: no
-        enabled: yes
-
-    - name: MSIO | Ensign | k3s | Add Yum Repository Docker CE
+    - name: Install yum utils
       yum:
-        name: {{ item }}
+        name: 
+          - yum-utils
+          - epel-release
+        state: latest
+
+    - name: Add Docker repo
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docer-ce.repo
+      become: yes
+
+    - name: Enable Docker Test repo
+      ini_file:
+        dest: /etc/yum.repos.d/docer-ce.repo
+        section: 'docker-ce-test'
+        option: enabled
+        value: 0
+      become: yes
+
+    - name: MSIO | Ensign | k3s | Add k3s-selinyx & containerd.io via URL
+      yum:
+        name:
+          - 'https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm'
+          - 'https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm'
         state: present
-        with_items:
-          - https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
-          - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
-#pkgListDnf="\
-#        docker-ce \
-#        container-selinux \
-#        selinux-policy-base \
-#	 "
-#sudo dnf install -y ${pkgListDnf}
-#sudo systemctl enable --now docker
-#sudo systemctl disable --now firewalld
-#sudo curl -sfL https://get.k3s.io | sh -
-#echo 'export PATH="$PATH:/usr/local/bin"' >> ${HOME}/.bashrc
-#sudo cp -f ${HOME}/.bashrc /root/.bashrc
+
+    - name: Install Docker
+      package:
+        name: 
+          - htop
+          - docker-ce
+          - container-selinux
+          - selinux-policy-base
+        state: latest
+      become: yes
+
+    - name: Start Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes
+
+    - name: Disable Firewalld service (using gcp firewall rules in TF)
+      systemd:
+        name: firewalld
+        state: stopped
+        enabled: no
+      become: yes
+
+    - name: MSIO | Ensign | k3s | Download k3s Install Script
+      get_url:
+        url: https://get.k3s.io
+        dest: /usr/local/bin/get-k3s-io
+        mode: 755
+      become: yes
+
+    - name: MSIO | Ensign | k3s | Run k3s Install Script
+      shell: /usr/local/bin/get-k3s-io
+
+#   - name: MSIO | Ensign | k3s | stage .kube/config
+#     file:
+#       path: "/etc/rancher/k3s/k3s.yaml"
+#       state: directory
+#       recurse: yes
+#       owner: root
+#       mode: '755'
+
+    - name: MSIO | Ensign | k3s | stage .kube/config
+      file:
+        dest: "/root/.kube"
+        state: directory
+    - file:
+        src: "/etc/rancher/k3s/k3s.yaml"
+        dest: "/root/.kube/config"
+        state: hard
+
 #sudo mkdir /root/.kube 2>/dev/null
 #sudo cp /etc/rancher/k3s/k3s.yaml /root/.kube/config
