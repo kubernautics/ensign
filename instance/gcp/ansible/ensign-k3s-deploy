@@ -45,8 +45,13 @@
         gpgcheck: no
         enabled: yes
 
-#urlK3sSelinux="https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm"
-#urlContainerd="https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm"
+    - name: MSIO | Ensign | k3s | Add Yum Repository Docker CE
+      yum:
+        name: {{ item }}
+        state: present
+        with_items:
+          - https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
+          - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
 #pkgListDnf="\
 #        docker-ce \
 #        container-selinux \
