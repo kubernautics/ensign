@@ -20,15 +20,19 @@
         state: present
         force_init: true
       register: tf_run
-#   - debug: var=tf_run.outputs.public_ipv4.value
+    - debug: var=tf_run.outputs.public_ipv4.value
+
+    - name: MSIO | Ensign | Add Ensign IP as Host
+      add_host:
+        name: '{{ tf_run.outputs.public_ipv4.value }}'
+        hostname: '{{ tf_run.outputs.public_ipv4.value }}'
+        groups: ensign.gcp
 
 - name: MSIO | Ensign | K3s Deploy
-  hosts: ensign
-  host_ip: '{{ tf_run.outputs.public_ipv4.value }}'
-  gather_facts: True
+  hosts: ensign.gcp
+  become: true
   tasks:
     - name: MSIO | Ensign | k3s | Add /usr/local/bin to system-wide $PATH.
-      become: true
       copy:
         dest: /etc/profile.d/path-usr-local-bin.sh
         content: 'PATH=$PATH:/usr/local/bin'
