@@ -26,7 +26,7 @@ public cloud resources, Ensign builds a simple and unrestricted commercial
 public IP front-end for unified publishing and ingress of distributed lab, 
 iot, and other distributed services.
 
-###### Services & functions officially supported on the Ensign Node:
+#### Services & functions officially supported on the Ensign Node:
   - Kubernetes - K3s 
   - VFW Gateway -  OpenWRT
   - Wireguard VPN Service
@@ -35,7 +35,7 @@ iot, and other distributed services.
   - SSL Certificate Enrollment & Renewal - HaProxy
   - Master Edge Bastion - SSH Proxy / Jump Host Entrypoint
 
-###### Sketching steps
+#### Sketching steps
 ```
 git clone https://github.com/ministackio/ensign.git ~/Git/ensign
 cd ~/Git/ensign/ansible
