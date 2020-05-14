@@ -23,7 +23,7 @@ This project was born out of frastration with network obstructions to
 maximising the flexibility of development & small scale / IoT service publishing.
 By leveraging state of the art, containerised overlay services, and inexpensive 
 public cloud resources, Ensign builds a simple and unrestricted commercial
-public IP front-end for unified publishing and ingress of distributed lab, 
+public hosted front-end for unified publishing and ingress of distributed lab, 
 iot, and other distributed services.
 
 #### Services & functions officially supported on the Ensign Node:
