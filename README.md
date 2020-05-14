@@ -27,23 +27,15 @@ public hosted front-end for unified publishing and ingress of distributed lab,
 iot, and other distributed services.
 
 #### Services & functions officially supported on the Ensign Node:
-| Function                       | Technology      |
-|-------------------------------:|:----------------|
-| Kubernetes                     | K3s             |
-| VFW Gateway                    | OpenWRT         |
-| VPN Overlay                    | Wireguard       |
-| Reverse Proxy                  | HaProxy/Traefik |
-| SSL Termination                | HaProxy/Traefik |
-| Certificate Enrollment/Renewal | HaProxy         |
-| SSH Proxy / Jump Host          | OpenSSH         |
-
-  - Kubernetes - K3s 
-  - VFW Gateway -  OpenWRT
-  - VPN Overlay - Wireguard
-  - Reverse Proxy - HaProxy/Traefik 
-  - SSL Termination - HaProxy/Traefik 
-  - SSL Certificate Enrollment & Renewal - HaProxy
-  - SSH Proxy / Jump Host Entrypoint - OpenSSH Container
+| Technology      | Function                       |
+|:----------------|:-------------------------------|
+| K3s             | Kubernetes                     |
+| OpenWRT         | VFW Gateway                    |
+| Wireguard       | VPN Overlay                    |
+| HaProxy/Traefik | Reverse Proxy (ingress)        |
+| HaProxy/Traefik | SSL Termination                |
+| HaProxy         | Certificate Enrollment/Renewal | 
+| OpenSSH         | SSH Proxy / Jump Host          |
 
 #### Sketching steps
 ```
