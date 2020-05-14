@@ -1,23 +1,43 @@
-# kingpin-cloud-bastion
-The KingPin Project, Tooling and work flow to leverage containerization on an affordable cloud instance as a master overlay node in labing environments
+# The Ensign Project (KingPin)
+### Purpose: 
+Publish any service, hosted anywhere, with all the convenience of Public Cloud hosting & Automated LetsEncrypt Certificate enrollment.    
+    
+### Method: 
+CI/CD Pipeline ready Ansible/Terraform/Bash/Golang Infrastructure-as-Code    
+    
+### Requirements:
+  - Registered domain name
+  - Control over the DNS server selection
+  - Podman/Docker enabled starting point with internet access
 
-# This is the CCIO Ensign, 
-a project to maximise the potential of low cost virtual cloud
-instances for use as a public & unrestricted IP front-end gateway to enable 
-unified ingress and egress of distributed lab and compute resources
+### Public Cloud Providers:
+  - [x] Google Cloud Platform (Free Tier Enabled)
+  - [ ] Google Kubernetes Engine
+  - [ ] AWS Free Tier
+  - [ ] Azure Free Tier
+  - [ ] Digital Ocean (in progress)
+  - [ ] Vultr
+
+## Story: 
+This project was born out of frastration with network obstructions to
+maximising the flexibility of development & small scale / IoT service publishing.
+By leveraging state of the art, containerised overlay services, and inexpensive 
+public cloud resources, Ensign builds a simple and unrestricted commercial
+public IP front-end for unified publishing and ingress of distributed lab, 
+iot, and other distributed services.
 
 ###### Services & functions officially supported on the Ensign Node:
-  - (VFW Gateway) Openwrt
-  - (Wireguard Master VPN Kingpin) Openwrt+wireguard
-  - (Reverse Proxy) HaProxy 
-  - (SSL Termination) HaProxy 
-  - (SSL Certificate Enrollment & Renewal) HaProxy
-  - (Public Key & Public Admin Resources) Apache simple file server
-  - (Master Edge Bastion) SSH
+  - Kubernetes - K3s 
+  - VFW Gateway -  OpenWRT
+  - Wireguard VPN Service
+  - Reverse Proxy - HaProxy/Traefik 
+  - SSL Termination - HaProxy/Traefik 
+  - SSL Certificate Enrollment & Renewal - HaProxy
+  - Master Edge Bastion - SSH Proxy / Jump Host Entrypoint
 
 ###### Sketching steps
 ```
-terraform init
-terraform plan
-terraform apply -auto-approve
+git clone https://github.com/ministackio/ensign.git ~/Git/ensign
+cd ~/Git/ensign/ansible
+./master
 ```

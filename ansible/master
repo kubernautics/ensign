@@ -1,10 +1,14 @@
 #!/bin/ansible-playbook 
 # Build a K3s "cluster" on GCP Instance with full DNS resolution
+
 # - [Build GCP DNS Zone] ---------------------
 - import_playbook: gcp-dns-deploy
+
 # - [Build GCP instance] ---------------------
 - import_playbook: gcp-ensign-deploy
+
 # - [Build GCP K3s on the instance] ----------
 - import_playbook: ensign-k3s-deploy
+
 # - [Build GCP OpenWRT Gateway the instance] -
 #- import_playbook: ensign-gateway-deploy
