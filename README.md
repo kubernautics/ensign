@@ -57,6 +57,7 @@ sudo podman run \
     --pod ccio-user                      \
     --restart on-failure                 \
     --workdir /root/.ccio                \
+    --volume ${HOME}/.ssh:/root/.ssh:ro  \
     --volume ${HOME}/.ccio:/root/.ccio:z \
   quay.io/containercraft/one:ccio
 ```
