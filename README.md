@@ -49,15 +49,15 @@ sudo podman pod create \
 ```
 ```
 sudo podman run \
-    --name one                         \
-    --hostname one                     \
-    --detach                           \
-    --privileged                       \
-    --pull always                      \
-    --pod ccio-user                    \
-    --restart on-failure               \
-    --workdir ${HOME}/.ccio            \
-    --volume ${HOME}/.ccio:/root/.ccio \
+    --name one                           \
+    --hostname one                       \
+    --detach                             \
+    --privileged                         \
+    --pull always                        \
+    --pod ccio-user                      \
+    --restart on-failure                 \
+    --workdir ${HOME}/.ccio              \
+    --volume ${HOME}/.ccio:/root/.ccio:z \
   quay.io/containercraft/one:ccio
 ```
 ```
