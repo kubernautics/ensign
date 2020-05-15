@@ -39,7 +39,22 @@ iot, and other distributed services.
 
 #### Sketching steps
 ```
-git clone https://github.com/ministackio/ensign.git ~/Git/ensign
-cd ~/Git/ensign/ansible
-./master
+mkdir ~/.ccio 2>/dev/null
+git clone https://github.com/ministackio/ensign.git ~/.ccio/ensign
+```
+```
+sudo podman run \
+    --name one                         \
+    --hostname one                     \
+    --detach                           \
+    --privileged                       \
+    --pull always                      \
+    --pod ccio-user                    \
+    --restart on-failure               \
+    --workdir ${HOME}/.ccio            \
+    --volume ${HOME}/.ccio:/root/.ccio \
+  quay.io/containercraft/one:ccio
+```
+```
+sudo podman exec --interactive --tty one connect
 ```
