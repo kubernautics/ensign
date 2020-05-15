@@ -1,6 +1,6 @@
 # The Ensign Project (KingPin)
 ### Purpose: 
-Publish any service, hosted anywhere, with all the convenience of Public Cloud hosting & Automated LetsEncrypt Certificate enrollment.    
+Publish any service, hosted anywhere, with all the convenience of Public Cloud hosting & Automated LetsEncrypt Certificate enrollment. No local firewall control, or dynamic dns required.    
     
 ### Method: 
 CI/CD Pipeline ready Ansible/Terraform/Bash/Golang Infrastructure-as-Code    
