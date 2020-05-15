@@ -2,13 +2,23 @@
 - name: MSIO | Ensign | Terraform Deploy
   hosts: localhost
   vars_files:
-    - vars/custom.yml
-    - vars/main.yml
+    - variables
   tasks:
     - name: MSIO | Ensign | Detect RunAs User
       become: false
       local_action: command whoami
       register: ansible_user_connected
+
+    - name: MSIO | Ensign | Create Terraform State Directories
+      file:
+        state: directory
+        owner: "{{ ansible_user_connected.stdout }}"
+        group: ccio
+        recurse: yes
+        mode: '775'
+        path: "{{ item }}"
+      with_items:
+        - "/home/{{ ansible_user_connected.stdout }}/.ccio/state/instance"
 
     - name: MSIO | Ensign | purge known_hosts
       lineinfile:

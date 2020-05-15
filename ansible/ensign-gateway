@@ -11,6 +11,18 @@
       become: false
       local_action: command whoami
       register: ansible_user_connected
+    - name: MSIO | Ensign | Create Terraform State Directories
+      file:
+        state: directory
+        owner: "{{ ansible_user_connected.stdout }}"
+        group: ccio
+        recurse: yes
+        mode: '775'
+        path: "{{ item }}"
+      with_items:
+        - "/home/{{ ansible_user_connected.stdout }}/.ccio/state/lxd"
+      delegate_to: localhost
+
     - name: MSIO | Ensign | Purge Old LXD Certs
       file:
         path: "/home/{{ ansible_user_connected.stdout }}/.config/lxc/servercerts"

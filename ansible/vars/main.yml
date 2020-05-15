@@ -1,9 +1,0 @@
-ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-packages_base_ubuntu:
-  - tmux
-  - htop
-  - podman
-  - hostname
-  - net-tools
-  - wireguard-tools
-  - openvswitch-switch
