@@ -65,3 +65,6 @@ podman run \
 ```
 podman exec --interactive --tty one connect
 ```
+```
+./ensign/ansible/run
+```
