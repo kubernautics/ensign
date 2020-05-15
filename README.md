@@ -43,6 +43,11 @@ mkdir ~/.ccio 2>/dev/null
 git clone https://github.com/ministackio/ensign.git ~/.ccio/ensign
 ```
 ```
+sudo podman pod create \
+    --name ccio-user               \
+    --pod-id-file ~/.ccio/.pod.id
+```
+```
 sudo podman run \
     --name one                         \
     --hostname one                     \
