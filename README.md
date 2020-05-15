@@ -43,12 +43,12 @@ mkdir ~/.ccio 2>/dev/null
 git clone https://github.com/ministackio/ensign.git ~/.ccio/ensign
 ```
 ```
-sudo podman pod create \
+podman pod create \
     --name ccio-user               \
     --pod-id-file ~/.ccio/.pod.id
 ```
 ```
-sudo podman run \
+podman run \
     --name one                           \
     --hostname one                       \
     --detach                             \
@@ -63,5 +63,5 @@ sudo podman run \
   quay.io/containercraft/one:ccio
 ```
 ```
-sudo podman exec --interactive --tty one connect
+podman exec --interactive --tty one connect
 ```
