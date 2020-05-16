@@ -55,8 +55,14 @@ podman exec --interactive --tty one connect
 ```
 ./ensign/ansible/run
 ```
-# Configure Registrar Nameservers with output of following - or - ( https://domains.google.com/m/registrar/ministack.dev/dns )
-# - $ gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
+# Check DNS Servers Configure Registrar Nameservers 
+  - In a browser:
+>    Example: https://domains.google.com/m/registrar/ministack.dev/dns )
+  - In a terminal:
+```
+gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
+```
+# Forward your Registrar Nameservers at these 4 server names
 
  
 ##################################################################
