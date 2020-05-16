@@ -62,7 +62,7 @@ podman exec --interactive --tty one connect
 ```
 gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
 ```
-# Forward your Registrar Nameservers at these 4 server names
+# Forward your Registrar Nameservers to these servers
 
  
 ```
