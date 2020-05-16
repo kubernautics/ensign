@@ -1,4 +1,4 @@
-#!/bin/ansible-playbook 
+#!/usr/bin/env ansible-playbook
 # Build a K3s "cluster" on GCP Instance with full DNS resolution
 
 # - [Build GCP DNS Zone] ---------------------

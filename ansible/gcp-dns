@@ -1,4 +1,4 @@
-#!/bin/ansible-playbook --inventory=inventory
+#!/usr/local/bin/ansible-playbook --inventory=inventory
 - name: MSIO | Ensign | Terraform Deploy
   hosts: localhost
   vars_files:
@@ -9,6 +9,14 @@
       local_action: command whoami
       register: ansible_user_connected
 
+    - name: MSIO | Ensign | Create Group 'CCIO'
+      group:
+        name: ccio
+        gid: 7000
+        system: true
+        state: present
+        non_unique: true
+
     - name: MSIO | Ensign | Create Terraform State Directory
       file:
         state: directory
@@ -18,7 +26,7 @@
         mode: '775'
         path: "{{ item }}"
       with_items:
-        - "/home/{{ ansible_user_connected.stdout }}/.ccio/state/dns"
+        - "/root/.ccio/state/dns"
 
     - name: MSIO | Ensign | GCP | DNS | Write State Provider from Template
       template:
@@ -32,7 +40,7 @@
 
     - name: MSIO | Ensign | GCP | Build GCP DNS Zone
       terraform:
-        project_path: "/root/.ccio/ensign/terraform/gcp/dns/state.tf"
+        project_path: "/root/.ccio/ensign/terraform/gcp/dns/"
         state: present
         force_init: true
        #variables_file: "../../vars/variables.tf"

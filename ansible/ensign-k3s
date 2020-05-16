@@ -1,4 +1,4 @@
-#!/bin/ansible-playbook --inventory=inventory
+#!/usr/bin/env ansible-playbook --inventory=inventory
 # Purpose:
 # - build k3s as base for remote wireguard ingress gateway
 ############################################################################
