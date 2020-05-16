@@ -3,7 +3,7 @@
 Publish any service, hosted anywhere, with all the convenience of Public Cloud hosting & Automated LetsEncrypt Certificate enrollment. No local firewall control, or dynamic dns required.    
     
 ## Story: 
-This project was born out of frastration with network obstructions to
+This project was born out of frustration with network obstructions to
 maximising the flexibility of development & small scale / IoT service publishing.
 By leveraging state of the art, containerised overlay services, and inexpensive 
 public cloud resources, Ensign builds a simple and unrestricted commercial
