@@ -7,11 +7,16 @@
   - In your Terminal:    
 #### Make a local directory for artifacts
 ```
-mkdir ~/.ccio 2>/dev/null
+mkdir -p ~/.ccio/profile.d 2>/dev/null
 ```
 #### Clone the ensign repo
 ```
 git clone https://github.com/ministackio/ensign.git ~/.ccio/ensign
+```
+#### Copy the ensign profile to your ccio/profile.d directory
+  - Open and edit to your variables
+```
+cp ~/.ccio/ensign/profile/example ~/.ccio/profile.d/ensign
 ```
 #### Start a pod to run containers in
 ```
@@ -60,11 +65,6 @@ podman exec --interactive --tty one connect
   gcloud iam service-accounts create terraform --description="terraform iam role" --display-name=terraform --project=${ccioEnsign_nameGcpProject}
   gcloud iam service-accounts keys create $GOOGLE_APPLICATION_CREDENTIALS --iam-account terraform@${ccioEnsign_nameGcpProject}.iam.gserviceaccount.com
   gcloud projects add-iam-policy-binding ${ccioEnsign_nameGcpProject} --member serviceAccount:terraform@${ccioEnsign_nameGcpProject}.iam.gserviceaccount.com --role roles/admin
-```
-#### Copy the ensign profile to your ccio/profile.d directory
-  - Open and edit to your variables
-```
-cp ~/.ccio/ensign/profile/example ~/.ccio/profile.d/ensign
 ```
 #### Run the top level ansible playbook
 ```
