@@ -1,25 +1,25 @@
 # Get Started:
-### Setup Google Compute Platform 
+#### Setup Google Compute Platform 
   - In your browser:     
   1. GCP [Get Started Free](https://cloud.google.com/free)
   2. Create Account
   3. [Enable/Add Billing Permission](https://console.cloud.google.com/getting-started)    
   - In your Terminal:    
-##### Make a local directory for artifacts
+#### Make a local directory for artifacts
 ```
 mkdir ~/.ccio 2>/dev/null
 ```
-##### Clone the ensign repo
+#### Clone the ensign repo
 ```
 git clone https://github.com/ministackio/ensign.git ~/.ccio/ensign
 ```
-##### Start a pod to run containers in
+#### Start a pod to run containers in
 ```
 podman pod create \
     --name ccio-user               \
     --pod-id-file ~/.ccio/.pod.id
 ```
-##### Launch ContainerOne
+#### Launch ContainerOne
 ```
 podman run \
     --name one      --hostname one       \
@@ -30,11 +30,11 @@ podman run \
     --volume ${HOME}/.ccio:/root/.ccio:z \
   quay.io/containercraft/one:ccio
 ```
-##### Connect to ContainerOne
+#### Connect to ContainerOne
 ```
 podman exec --interactive --tty one connect
 ```
-##### Setup google credentials & project
+#### Setup google credentials & project
 ```
   gcloud init
 ```
@@ -55,22 +55,22 @@ podman exec --interactive --tty one connect
   gcloud services list --available
   gcloud services list --available | grep -i dns
 ```
-##### Build GCP IAM Policy to allow terraform actions
+#### Build GCP IAM Policy to allow terraform actions
 ```
   gcloud iam service-accounts create terraform --description="cloudctl terraform iam role" --display-name=terraform --project=ministackdev
   gcloud iam service-accounts keys create $GOOGLE_APPLICATION_CREDENTIALS --iam-account terraform@ministackdev.iam.gserviceaccount.com
   gcloud projects add-iam-policy-binding ministackdev --member serviceAccount:terraform@ministackdev.iam.gserviceaccount.com --role roles/admin
 ```
-##### Copy the ensign profile to your ccio/profile.d directory
+#### Copy the ensign profile to your ccio/profile.d directory
   - Open and edit to your variables
 ```
 cp ~/.ccio/ensign/profile/example ~/.ccio/profile.d/ensign
 ```
-##### Run the top level ansible playbook
+#### Run the top level ansible playbook
 ```
 ./ensign/ansible/run
 ```
-##### Check DNS Servers
+#### Check DNS Servers
   - In a terminal:
 ```
 gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
@@ -78,10 +78,10 @@ gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}'
   - In a browser:
 >    Example: https://console.cloud.google.com/net-services/dns/zones
     
-##### Forward your Registrar Nameservers to these servers
+#### Forward your Registrar Nameservers to these servers
 >    Example: https://domains.google.com/m/registrar/
 
-##### Done! 
+#### Done! 
 
 ```
 ##################################################################
