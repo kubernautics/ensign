@@ -57,7 +57,7 @@ podman exec --interactive --tty one connect
 ```
 ## Check DNS Servers
   - In a browser:
->    Example: https://domains.google.com/m/registrar/ministack.dev/dns )
+>    Example: https://domains.google.com/m/registrar/ministack.dev/dns
   - In a terminal:
 ```
 gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
