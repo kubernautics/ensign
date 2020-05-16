@@ -37,34 +37,9 @@ iot, and other distributed services.
 | HaProxy         | Certificate Enrollment/Renewal | 
 | OpenSSH         | SSH Proxy / Jump Host          |
 
-#### Sketching steps
 ```
-mkdir ~/.ccio 2>/dev/null
-git clone https://github.com/ministackio/ensign.git ~/.ccio/ensign
-```
-```
-podman pod create \
-    --name ccio-user               \
-    --pod-id-file ~/.ccio/.pod.id
-```
-```
-podman run \
-    --name one                           \
-    --hostname one                       \
-    --detach                             \
-    --privileged                         \
-    --pull always                        \
-    --pod ccio-user                      \
-    --userns=keep-id                     \
-    --restart on-failure                 \
-    --workdir /root/.ccio                \
-    --volume ${HOME}/.ssh:/root/.ssh:z   \
-    --volume ${HOME}/.ccio:/root/.ccio:z \
-  quay.io/containercraft/one:ccio
-```
-```
-podman exec --interactive --tty one connect
-```
-```
-./ensign/ansible/run
+                         ~ DISCLAIMER ~  
+This project is not afiliated with any cloud provider by commercial 
+interest, social or professional connection, bias, or any other direct 
+or indirect loyalty or interest, use these tools at your own discretion.
 ```

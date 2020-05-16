@@ -23,6 +23,8 @@ variable "instance_os" {
 
 variable "ensign_type" {
   default     = "e2-small"
+# default     = "e2-micro"
+# default     = "f1-micro"
 }
 
 variable "size_volume_lxd" {

@@ -1,0 +1,15 @@
+https://cloud.digitalocean.com/account/api/tokens
+ - generate new token
+ - create token name (EG: ensign)
+ - Enable scopes: {read,write}
+ - Save token to: ~/.ccio/secrets/digitalocean/token
+ - cp credentials file to: ~/.ccio/secrets/digitalocean/credentials
+
+```
+/bin/bash -c "\
+curl -L $(curl \
+-s https://api.github.com/repos/digitalocean/doctl/releases/latest \
+| grep browser_download_url \
+| awk '/linux-amd64.tar.gz/{print $2}' \
+) | sudo tar xvzf - --directory /usr/bin/ doctl"
+```
