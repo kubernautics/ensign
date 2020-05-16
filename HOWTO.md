@@ -35,8 +35,9 @@ podman exec --interactive --tty one connect
   - copy code back into terminal prompt
   - create new project 
   - enter new project id name 
+>    Example: `ministackdev`
   - open web console to verify 
->    https://console.cloud.google.com/getting-started
+>    Example: https://console.cloud.google.com/getting-started?project=ministackdev
   - open billing console & link new project to billing account 
 >    Example: https://console.cloud.google.com/billing/linkedaccount?project=ministackdev
 
