@@ -55,7 +55,7 @@ podman exec --interactive --tty one connect
 ```
 ./ensign/ansible/run
 ```
-# Check DNS Servers Configure Registrar Nameservers 
+# Check DNS Servers
   - In a browser:
 >    Example: https://domains.google.com/m/registrar/ministack.dev/dns )
   - In a terminal:
