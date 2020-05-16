@@ -57,9 +57,9 @@ podman exec --interactive --tty one connect
 ```
 #### Build GCP IAM Policy to allow terraform actions
 ```
-  gcloud iam service-accounts create terraform --description="cloudctl terraform iam role" --display-name=terraform --project=ministackdev
-  gcloud iam service-accounts keys create $GOOGLE_APPLICATION_CREDENTIALS --iam-account terraform@ministackdev.iam.gserviceaccount.com
-  gcloud projects add-iam-policy-binding ministackdev --member serviceAccount:terraform@ministackdev.iam.gserviceaccount.com --role roles/admin
+  gcloud iam service-accounts create terraform --description="terraform iam role" --display-name=terraform --project=${ccioEnsign_nameGcpProject}
+  gcloud iam service-accounts keys create $GOOGLE_APPLICATION_CREDENTIALS --iam-account terraform@${ccioEnsign_nameGcpProject}.iam.gserviceaccount.com
+  gcloud projects add-iam-policy-binding ${ccioEnsign_nameGcpProject} --member serviceAccount:terraform@${ccioEnsign_nameGcpProject}.iam.gserviceaccount.com --role roles/admin
 ```
 #### Copy the ensign profile to your ccio/profile.d directory
   - Open and edit to your variables
@@ -73,7 +73,7 @@ cp ~/.ccio/ensign/profile/example ~/.ccio/profile.d/ensign
 #### Check DNS Servers
   - In a terminal:
 ```
-gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
+gcloud dns managed-zones describe ${ccioEnsign_nameGcpProject} | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
 ```
   - In a browser:
 >    Example: https://console.cloud.google.com/net-services/dns/zones
@@ -90,9 +90,9 @@ gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}'
   https://cloud.google.com/dns/docs/migrating << how to migrate DNS to GCP
 
 # Troubleshoot instance startup with
-  gcloud compute --project=ministackdev instances get-serial-port-output ensign --zone=us-west3-a
+  gcloud compute --project=${ccioEnsign_nameGcpProject} instances get-serial-port-output ensign --zone=us-west3-a
   gcloud services enable dns.googleapis.com --async
   gcloud services enable iam.googleapis.com --async
-  gcloud dns managed-zones create --visibility=public --dns-name="ministack.dev" --description="A zone" "ministackdev"
-  terraform import google_compute_address.ensign_public_ipv4 projects/ministackdev/regions/us-west3/addresses/ensign-public-ipv4
+  gcloud dns managed-zones create --visibility=public --dns-name="ministack.dev" --description="A zone" "${ccioEnsign_nameGcpProject}"
+  terraform import google_compute_address.ensign_public_ipv4 projects/${ccioEnsign_nameGcpProject}/regions/us-west3/addresses/ensign-public-ipv4
 ```
