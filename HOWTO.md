@@ -70,8 +70,9 @@ gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}'
 # Quick Refrence Notes:
 https://cloud.google.com/compute/vm-instance-pricing#sharedcore
 https://cloud.google.com/dns/docs/migrating << how to migrate DNS to GCP
+
 # Troubleshoot instance startup with
-# - $ gcloud compute --project=ministackdev instances get-serial-port-output ensign --zone=us-west3-a
+  gcloud compute --project=ministackdev instances get-serial-port-output ensign --zone=us-west3-a
   gcloud services enable dns.googleapis.com --async
   gcloud services enable iam.googleapis.com --async
   gcloud dns managed-zones create --visibility=public --dns-name="ministack.dev" --description="A zone" "ministackdev"
