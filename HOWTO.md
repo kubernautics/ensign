@@ -37,7 +37,8 @@ podman exec --interactive --tty one connect
   - enter new project id name 
   - open web console to verify 
 >    https://console.cloud.google.com/getting-started
-  - open billing console & link new project to billing account (eg: https://console.cloud.google.com/billing/linkedaccount?project=ministackdev)
+  - open billing console & link new project to billing account 
+>    Example: https://console.cloud.google.com/billing/linkedaccount?project=ministackdev
 
 ```
   gcloud projects list
