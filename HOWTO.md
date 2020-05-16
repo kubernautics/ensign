@@ -30,13 +30,13 @@ podman exec --interactive --tty one connect
 ```
   gcloud init
 ```
-# - open hyperlink provided & login
-# - allow sdk access rights
-# - copy code back into terminal prompt
-# - create new project 
-# - enter new project id name (eg: ministackdev)
-# - open web console to verify (eg: https://console.cloud.google.com/getting-started?project=ministackdev)
-# - open billing console & link new project to billing account (eg: https://console.cloud.google.com/billing/linkedaccount?project=ministackdev)
+  - open hyperlink provided & login
+  - allow sdk access rights
+  - copy code back into terminal prompt
+  - create new project 
+  - enter new project id name (eg: ministackdev)
+  - open web console to verify (eg: https://console.cloud.google.com/getting-started?project=ministackdev)
+  - open billing console & link new project to billing account (eg: https://console.cloud.google.com/billing/linkedaccount?project=ministackdev)
 
 ```
   gcloud projects list
