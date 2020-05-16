@@ -34,8 +34,9 @@ podman exec --interactive --tty one connect
   - allow sdk access rights
   - copy code back into terminal prompt
   - create new project 
-  - enter new project id name (eg: ministackdev)
-  - open web console to verify (eg: https://console.cloud.google.com/getting-started?project=ministackdev)
+  - enter new project id name 
+  - open web console to verify 
+>    https://console.cloud.google.com/getting-started
   - open billing console & link new project to billing account (eg: https://console.cloud.google.com/billing/linkedaccount?project=ministackdev)
 
 ```
