@@ -76,6 +76,5 @@ https://cloud.google.com/dns/docs/migrating << how to migrate DNS to GCP
   gcloud services enable dns.googleapis.com --async
   gcloud services enable iam.googleapis.com --async
   gcloud dns managed-zones create --visibility=public --dns-name="ministack.dev" --description="A zone" "ministackdev"
-
   terraform import google_compute_address.ensign_public_ipv4 projects/ministackdev/regions/us-west3/addresses/ensign-public-ipv4
 ```
