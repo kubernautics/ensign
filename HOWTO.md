@@ -1,9 +1,3 @@
-# MSIO Ensign Project
-# Requirements:
-  - Google Compute Platform account    
-  - Linux OS & Terminal    
-  - [Podman](https://podman.io/getting-started/installation.html)    
-> docker may work but is currently untested     
 # Get Started:
 ### Setup Google Compute Platform 
   - In your browser:     
