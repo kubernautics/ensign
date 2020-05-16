@@ -2,9 +2,6 @@
 ### Purpose: 
 Publish any service, hosted anywhere, with all the convenience of Public Cloud hosting & Automated LetsEncrypt Certificate enrollment. No local firewall control, or dynamic dns required.    
     
-### Method: 
-CI/CD Pipeline ready Ansible/Terraform/Bash/Golang Infrastructure-as-Code    
-    
 ## Story: 
 This project was born out of frastration with network obstructions to
 maximising the flexibility of development & small scale / IoT service publishing.
