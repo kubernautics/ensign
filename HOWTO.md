@@ -56,13 +56,13 @@ podman exec --interactive --tty one connect
 ./ensign/ansible/run
 ```
 ## Check DNS Servers
-  - In a browser:
->    Example: https://domains.google.com/m/registrar/ministack.dev/dns
   - In a terminal:
 ```
 gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
 ```
 ## Forward your Registrar Nameservers to these servers
+  - In a browser:
+>    Example: https://domains.google.com/m/registrar/
 
  
 ```
