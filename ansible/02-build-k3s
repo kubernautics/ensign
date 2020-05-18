@@ -2,6 +2,7 @@
 # Purpose:
 # - build k3s on target host
 ############################################################################
+# Localhost Prep Tasks
 - name: MSIO | Ensign | K3s Deploy | ansible/run-k3s
   hosts: localhost
   vars:
@@ -40,6 +41,8 @@
         hostname: '{{ tf_output.outputs.public_ipv4.value }}'
         groups: ensigns
 
+############################################################################
+# Ensign Tasks
 - name: '{{ ansible_name_module_cloud }} | K3s Deploy'
   hosts: ensigns
   user: ccio

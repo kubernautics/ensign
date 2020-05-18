@@ -30,6 +30,7 @@
         recurse: yes
       with_items:
         - "{{ tf_vars }}"
+
     ####### Stage terraform variables & state provider plugins
     - name: '{{ ansible_name_module_cloud }} | template | Local State Provider & Global Variables'
       template:
