@@ -1,6 +1,9 @@
 ---
-# Cloud Provider
-cloud: "{{ lookup('env','ccioEnsign_provider') }}"
+
+# Localhost Environment 
+local_path: "{{ lookup('env','PWD') }}"
+local_home: "{{ lookup('env','HOME') }}"
+local_user: "{{ lookup('env','USER') }}"
 
 # Ansible Playbook Run Variables
 ansible_name: "MSIO | Ensign"
@@ -11,7 +14,5 @@ sshkeys_pub: "{{ lookup('file', '{{ local_home }}/.ssh/id_rsa.pub') }}"
 tf_vars: "{{ local_home }}/.ccio/tf"
 tf_home: "{{ local_home }}/.ccio/ensign/terraform"
 
-# Localhost Environment 
-local_path: "{{ lookup('env','PWD') }}"
-local_home: "{{ lookup('env','HOME') }}"
-local_user: "{{ lookup('env','USER') }}"
+# Cloud Provider
+cloud: "{{ lookup('env','ccioEnsign_provider') }}"
