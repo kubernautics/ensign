@@ -1,0 +1,92 @@
+.
+├── ansible
+│   ├── 00-configure-dns
+│   ├── 01-build-instance
+│   ├── 02-build-k3s
+│   ├── 03-build-gateway
+│   ├── include
+│   │   ├── packages
+│   │   │   └── url-packages-RedHat
+│   │   └── variables
+│   │       ├── Debian
+│   │       └── RedHat
+│   ├── inventory
+│   ├── run
+│   ├── templates
+│   │   ├── 00-net-variables.j2
+│   │   ├── 01-ovs-internal.j2
+│   │   ├── 02-mgmt1.j2
+│   │   ├── ccio.service.j2
+│   │   ├── ccio.sh.j2
+│   │   ├── example.home.profile.d.ensign
+│   │   ├── lxd.yml.j2
+│   │   ├── openwrt
+│   │   │   ├── dhcp
+│   │   │   ├── dropbear
+│   │   │   ├── firewall
+│   │   │   ├── hosts
+│   │   │   ├── luci
+│   │   │   ├── network
+│   │   │   ├── rpcd
+│   │   │   ├── system
+│   │   │   ├── ucitrack
+│   │   │   └── uhttpd
+│   │   ├── ovs-clear.j2
+│   │   ├── podman.list.j2
+│   │   ├── resolved.conf.j2
+│   │   └── tf
+│   │       ├── local.tfstate.j2
+│   │       └── master.tfvars.j2
+│   └── variables
+├── DEPLOY.md
+├── HOWTO.md
+├── LICENSE
+├── README.md
+├── terraform
+│   ├── do
+│   │   ├── lxd
+│   │   │   └── init.yml
+│   │   ├── secrets
+│   │   │   └── digitalocean
+│   │   │       └── token
+│   │   └── terraform
+│   │       ├── digitalocean.tf
+│   │       └── ensign.tf
+│   └── gcp
+│       ├── dns
+│       │   ├── default.tf
+│       │   ├── dns.tf
+│       │   ├── local.tfstate
+│       │   ├── modules.tf
+│       │   ├── provider.tf
+│       │   └── terraform-apply.sh
+│       ├── instance
+│       │   ├── bin
+│       │   │   ├── startup-centos.sh
+│       │   │   └── startup-ubuntu.sh
+│       │   ├── default.tf
+│       │   ├── ensign.tf
+│       │   ├── environment
+│       │   ├── firewall.tf
+│       │   ├── local.tfstate
+│       │   ├── modules.tf
+│       │   ├── provider.tf
+│       │   ├── serial.tf
+│       │   └── state.tf
+│       └── lxd
+│           ├── default.tf
+│           ├── gateway.tf
+│           ├── images.tf
+│           ├── output.tf
+│           └── provider.tf
+└── zdoc
+    ├── contrib
+    │   ├── bashrc.d
+    │   │   └── google
+    │   ├── lxd
+    │   │   └── init.yml
+    │   └── wg-artifacts
+    │       ├── wg0.conf
+    │       ├── wg_build_centos.log
+    │       └── wireguard.xml
+    └── digitalocean.log
