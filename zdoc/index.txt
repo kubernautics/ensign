@@ -18,7 +18,6 @@
 │   │   ├── 02-mgmt1.j2
 │   │   ├── ccio.service.j2
 │   │   ├── ccio.sh.j2
-│   │   ├── example.home.profile.d.ensign
 │   │   ├── lxd.yml.j2
 │   │   ├── openwrt
 │   │   │   ├── dhcp
@@ -35,12 +34,21 @@
 │   │   ├── podman.list.j2
 │   │   ├── resolved.conf.j2
 │   │   └── tf
+│   │       ├── dns
+│   │       │   └── terraform.tfstate.j2
+│   │       ├── instance
+│   │       │   └── terraform.tfstate.j2
 │   │       ├── local.tfstate.j2
-│   │       └── master.tfvars.j2
+│   │       ├── lxd
+│   │       │   └── terraform.tfstate.j2
+│   │       ├── master.tfvars.j2
+│   │       └── vars
 │   └── variables
 ├── DEPLOY.md
 ├── HOWTO.md
 ├── LICENSE
+├── profile.d
+│   └── example.ensign
 ├── README.md
 ├── terraform
 │   ├── do
@@ -59,7 +67,8 @@
 │       │   ├── local.tfstate
 │       │   ├── modules.tf
 │       │   ├── provider.tf
-│       │   └── terraform-apply.sh
+│       │   ├── terraform-apply.sh
+│       │   └── terraform.tfstate
 │       ├── instance
 │       │   ├── bin
 │       │   │   ├── startup-centos.sh
@@ -86,7 +95,45 @@
     │   ├── lxd
     │   │   └── init.yml
     │   └── wg-artifacts
+    │       ├── privatekey
+    │       ├── publickey
     │       ├── wg0.conf
     │       ├── wg_build_centos.log
     │       └── wireguard.xml
-    └── digitalocean.log
+    ├── digitalocean.log
+    ├── haproxy
+    │   ├── bin
+    │   │   ├── build.log
+    │   │   ├── configure-haproxy
+    │   │   ├── eth0.network
+    │   │   ├── haproxy.cfg
+    │   │   ├── make-master-pem
+    │   │   ├── new-letsencrypt-wildcard
+    │   │   └── renew-letsencrypt-wildcard
+    │   ├── ensign.haproxy.cfg
+    │   └── haproxy-ssh-ingress-refrence.log
+    ├── index.txt
+    ├── k3s
+    └── openwrt
+        ├── config
+        │   ├── dhcp
+        │   ├── dhcp.leases
+        │   ├── dropbear
+        │   ├── firewall
+        │   ├── firewall.user
+        │   ├── hosts
+        │   ├── luci
+        │   ├── mgmt1.log
+        │   ├── network
+        │   ├── nmcli.log
+        │   ├── resolv.conf.auto
+        │   ├── rpcd
+        │   ├── system
+        │   ├── ucitrack
+        │   └── uhttpd
+        ├── metadata.yaml
+        ├── openwrt-19.07.2-x86-64-lxd.tar.gz
+        ├── openwrt_fingerprint.txt
+        └── openwrt.yaml
+
+33 directories, 103 files
