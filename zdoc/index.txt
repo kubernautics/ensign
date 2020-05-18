@@ -41,8 +41,7 @@
 │   │       ├── local.tfstate.j2
 │   │       ├── lxd
 │   │       │   └── terraform.tfstate.j2
-│   │       ├── master.tfvars.j2
-│   │       └── vars
+│   │       └── master.tfvars.j2
 │   └── variables
 ├── DEPLOY.md
 ├── HOWTO.md
@@ -67,8 +66,7 @@
 │       │   ├── local.tfstate
 │       │   ├── modules.tf
 │       │   ├── provider.tf
-│       │   ├── terraform-apply.sh
-│       │   └── terraform.tfstate
+│       │   └── terraform-apply.sh
 │       ├── instance
 │       │   ├── bin
 │       │   │   ├── startup-centos.sh
@@ -94,14 +92,6 @@
     │   │   └── google
     │   ├── lxd
     │   │   └── init.yml
-    │   └── wg-artifacts
-    │       ├── privatekey
-    │       ├── publickey
-    │       ├── wg0.conf
-    │       ├── wg_build_centos.log
-    │       └── wireguard.xml
-    ├── digitalocean.log
-    ├── haproxy
     │   ├── bin
     │   │   ├── build.log
     │   │   ├── configure-haproxy
@@ -113,27 +103,4 @@
     │   ├── ensign.haproxy.cfg
     │   └── haproxy-ssh-ingress-refrence.log
     ├── index.txt
-    ├── k3s
-    └── openwrt
-        ├── config
-        │   ├── dhcp
-        │   ├── dhcp.leases
-        │   ├── dropbear
-        │   ├── firewall
-        │   ├── firewall.user
-        │   ├── hosts
-        │   ├── luci
-        │   ├── mgmt1.log
-        │   ├── network
-        │   ├── nmcli.log
-        │   ├── resolv.conf.auto
-        │   ├── rpcd
-        │   ├── system
-        │   ├── ucitrack
-        │   └── uhttpd
-        ├── metadata.yaml
-        ├── openwrt-19.07.2-x86-64-lxd.tar.gz
-        ├── openwrt_fingerprint.txt
-        └── openwrt.yaml
-
-33 directories, 103 files
+    └── k3s
