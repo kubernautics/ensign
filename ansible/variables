@@ -1,6 +1,6 @@
 ---
 # Cloud Provider
-cloud: 'gcp'
+cloud: "{{ lookup('env','ccioEnsign_provider') }}"
 
 # Ansible Playbook Run Variables
 ansible_name: "MSIO | Ensign"
