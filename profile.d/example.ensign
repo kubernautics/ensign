@@ -1,6 +1,10 @@
+# origin - ${HOME}/.ccio/profile.d/ensign
+
+export ccioEnsign_provider="gcp"
 export ccioEnsign_regionGcpRegion="us-west3"
 export ccioEnsign_instanceGcpType="e2-small"
 export ccioEnsign_linuxDistribution="centos"
+
 export ccioEnsign_domainSub="ensign"
 export ccioEnsign_domainBase="ministack.dev"
 export ccioEnsign_nameGcpProject="ministackdev"
