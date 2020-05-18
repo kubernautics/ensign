@@ -1,5 +1,9 @@
 #!/usr/bin/env ansible-playbook
-# Build a K3s "cluster" on GCP Instance with full DNS resolution
+# Inventory of Tasks:
+# 1 Build a cloud dns zone from your domain
+# 2 Build a public cloud instance (centos)
+# 3 Create public DNS records for instance
+# 4 Build a K3s "cluster" on the instance
 
 # - [Build GCP DNS Zone] ---------------------
 - import_playbook: 00-configure-dns
