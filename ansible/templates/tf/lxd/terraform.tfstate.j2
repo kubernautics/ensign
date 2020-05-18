@@ -1,5 +1,5 @@
 terraform {
   backend "local" {
-    path = "/home/{{ ansible_user_connected.stdout }}/.ccio/state/lxd/terraform.tfstate"
+    path = "/home/{{ local_home }}/.ccio/state/lxd/terraform.tfstate"
   }
 }

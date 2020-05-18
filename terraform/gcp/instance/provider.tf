@@ -1,4 +1,4 @@
 provider "google" {
-  region  = var.tfregion
+  region  = var.region
   project = var.project_name
 }

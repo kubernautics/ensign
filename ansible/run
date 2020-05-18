@@ -2,13 +2,13 @@
 # Build a K3s "cluster" on GCP Instance with full DNS resolution
 
 # - [Build GCP DNS Zone] ---------------------
-- import_playbook: gcp-dns
+- import_playbook: 00-configure-dns
 
 # - [Build GCP instance] ---------------------
-- import_playbook: gcp-ensign
+- import_playbook: 01-build-instance
 
 # - [Build GCP K3s on the instance] ----------
-- import_playbook: ensign-k3s
+- import_playbook: 02-build-k3s
 
 # - [Build GCP OpenWRT Gateway the instance] -
-#- import_playbook: ensign-gateway
+# import_playbook: 03-build-gateway
