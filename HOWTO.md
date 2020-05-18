@@ -68,7 +68,7 @@ podman exec --interactive --tty one connect
 ```
 #### Run the top level ansible playbook
 ```
-./ensign/ansible/run
+./.ccio/ensign/ansible/run
 ```
 #### Check DNS Servers
   - In a terminal:
