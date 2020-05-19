@@ -30,6 +30,6 @@ resource "google_compute_firewall" "ensign" {
   target_tags    = ["ensign"]
   allow {
     protocol     = "tcp"
-    ports        = ["8443", "8081", "443", "8080", "8000", "80", "22021"]
+    ports        = ["8443", "8081", "443", "8080", "8000", "80", "6443", "22021"]
   }
 }
