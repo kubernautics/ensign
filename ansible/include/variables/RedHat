@@ -6,3 +6,6 @@ list_packages_url:
 list_packages_base:
   - yum-utils
   - epel-release
+
+list_packages_wireguard:
+  - wireguard-tools

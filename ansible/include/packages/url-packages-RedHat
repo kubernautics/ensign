@@ -36,6 +36,7 @@
     name: 
       - htop
       - docker-ce
+      - wireguard-tools
       - container-selinux
       - selinux-policy-base
     state: present

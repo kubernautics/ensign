@@ -103,3 +103,13 @@
         src: "/etc/rancher/k3s/k3s.yaml"
         dest: "{{ local_home }}/.kube/ensign"
         flat: yes
+
+    ####### Purge SSH known_hosts entries if previous entries found
+    - name: '{{ ansible_name_module_cloud }} | lineinfile | find replace localhost/ensign'
+      delegate_to: localhost
+      lineinfile:
+        dest: "{{ local_home }}/.kube/ensign"
+        regexp: "{{ item.match }}"
+        line: "{{ item.new }}"
+      with_items:
+        - { match: '    server: https://127.0.0.1:6443', new: '    server: https://{{ ensign_fqdn }}:6443' }
