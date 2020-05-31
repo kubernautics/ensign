@@ -2,7 +2,7 @@
 resource "google_compute_instance" "ensign" {
 
   name            = var.instance_name
-  zone            = var.tfzone
+  zone            = var.zone
 # project         = var.project_name
   hostname        = var.hostname
   machine_type    = var.ensign_type
@@ -32,7 +32,7 @@ resource "google_compute_instance" "ensign" {
   }
   metadata = {
     serial-port-logging-enable = "TRUE"
-    ssh-keys                   = "kmorgan:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys                   = var.sshkeys
     startup-script             = "${module.startup-script-lib.content}"
     startup-script-custom      = file("${path.module}/bin/startup-centos.sh")
   }
@@ -51,13 +51,6 @@ resource "google_dns_record_set" "ensign" {
   //rrdatas = ["${google_compute_address.primary-public-ipv4.network_interface.0.access_config.0.nat_ip}"]
 }
 
-data "google_compute_instance_serial_port" "serial" {
-  instance = google_compute_instance.ensign.name
-  project         = var.project_name
-  zone            = var.tfzone
-  port = 1
-}
-
 output "public_ipv4" {
   value = google_compute_instance.ensign.network_interface.0.access_config.0.nat_ip
 }
@@ -65,7 +58,7 @@ output "public_ipv4" {
 #resource "google_compute_disk" "volume_ensign_sda" {
 #  name    = "volume_ensign_sda"
 #  type    = "pd-standard"
-#  zone    = var.tfregion
+#  zone    = var.region
 #  size    = var.size_volume_lxd
 #  project = var.project_id
 #}

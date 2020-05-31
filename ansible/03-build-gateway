@@ -1,4 +1,4 @@
-#!/bin/ansible-playbook --inventory=inventory
+#!/usr/bin/env ansible-playbook --inventory=inventory
 - name: MSIO | Ensign | https://github.com/ministackio/ensign
   hosts: ensign
   become: yes
@@ -11,19 +11,24 @@
       become: false
       local_action: command whoami
       register: ansible_user_connected
+    - name: MSIO | Ensign | Create Terraform State Directories
+      file:
+        state: directory
+        owner: "{{ ansible_user_connected.stdout }}"
+        group: ccio
+        recurse: yes
+        mode: '775'
+        path: "{{ item }}"
+      with_items:
+        - "/home/{{ ansible_user_connected.stdout }}/.ccio/state/lxd"
+      delegate_to: localhost
+
     - name: MSIO | Ensign | Purge Old LXD Certs
       file:
         path: "/home/{{ ansible_user_connected.stdout }}/.config/lxc/servercerts"
         state: absent
       delegate_to: localhost
 
-    - name: MSIO | Ensign | Create Group 'CCIO'
-      group:
-        name: ccio
-        gid: 7000
-        system: true
-        state: present
-        non_unique: true
     - name: MSIO | Ensign | Create Group 'LXD'
       group:
         name: lxd

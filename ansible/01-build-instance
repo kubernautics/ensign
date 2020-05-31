@@ -1,0 +1,56 @@
+#!/usr/local/bin/ansible-playbook --inventory=inventory
+- name: MSIO | Ensign | Cloud Instance Deploy | ansible/gcp-ensign
+  hosts: localhost
+  vars:
+    module: "instance"
+    state_provider: "local"
+    tf_module_path: "{{ tf_home }}/{{ cloud }}/{{ module }}"
+    ansible_name_module_cloud: "{{ ansible_name }} | {{ module }} | {{ cloud }}"
+  vars_files:
+    - variables
+  tasks:
+
+    ####### Stage State Profider Template
+    - name: '{{ ansible_name_module_cloud }} | template | Local State Provider'
+      template:
+        group: "ccio"
+        src: "{{ item.name }}"
+        dest: "{{ item.dest }}"
+        mode: "{{ item.mode }}"
+        owner: "{{ local_user }}"
+      loop: 
+        - { mode: '755', name: "tf/master.tfvars.j2", dest: "{{ tf_vars }}/global.tfvars"}
+        - { mode: '755', name: "tf/{{ state_provider }}.tfstate.j2", dest: "{{ tf_module_path }}/{{ state_provider }}.tfstate"}
+
+    ####### Terraform Init
+    - name: '{{ ansible_name_module_cloud }} | shell | terraform init'
+      shell: terraform init
+      args:
+        chdir: "{{ tf_module_path }}"
+
+    ####### Terraform Apply
+    - name: '{{ ansible_name_module_cloud }} | terraform | apply'
+      terraform:
+        project_path: "{{ tf_module_path }}"
+        variables_file: "{{ tf_vars }}/global.tfvars"
+        force_init: true
+        state: present
+      register: tf_output
+
+    ####### Purge SSH known_hosts entries if previous entries found
+    - name: '{{ ansible_name_module_cloud }} | lineinfile | purge previous known_hosts entries'
+      lineinfile:
+        dest: "{{ local_home }}/.ssh/known_hosts"
+        regexp: "{{ item.regex }}"
+        state: absent
+      with_items:
+        - { regex: ensign }
+        - { regex: '{{ tf_output.outputs.public_ipv4.value }}' }
+
+    ####### Declare result & public address of instance
+    - name: 'Ensign Public IP Address'
+      debug: 
+        msg:
+        - "New instance created at the following ip address:"
+        - "{{ tf_output.outputs.public_ipv4.value }}"
+    

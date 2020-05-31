@@ -1,0 +1,10 @@
+apiVersion: v2
+name: ensign
+description: MSIO Ensign Helmchart for K3s
+
+# Chart Version
+version: 0.1.0
+# Application Version
+appVersion: 1.16.0
+# types: {application, library}
+type: application

@@ -1,0 +1,65 @@
+#!/usr/local/bin/ansible-playbook --inventory=inventory
+- name: MSIO | Ensign | Cloud DNS Configuration
+  hosts: localhost
+  vars:
+    module: "dns"
+    state_provider: "local"
+    tf_module: "{{ tf_home }}/{{ cloud }}/{{ module }}"
+    ansible_name_module_cloud: "{{ ansible_name }} | {{ module }} | {{ cloud }}"
+  vars_files:
+    - variables
+  tasks:
+
+    ####### Addgroup CCIO
+    - name: '{{ ansible_name_module_cloud }} | group | Create CCIO'
+      group:
+        gid: 7000
+        name: ccio
+        state: present
+        system: true
+        non_unique: true
+
+    ####### Create required directories
+    - name: '{{ ansible_name_module_cloud }} | file | Create Directories'
+      file:
+        state: directory
+        mode: '775'
+        path: "{{ item }}"
+        owner: "{{ local_user }}"
+        group: ccio
+        recurse: yes
+      with_items:
+        - "{{ tf_vars }}"
+
+    ####### Stage terraform variables & state provider plugins
+    - name: '{{ ansible_name_module_cloud }} | template | Local State Provider & Global Variables'
+      template:
+        group: "ccio"
+        src: "{{ item.name }}"
+        dest: "{{ item.dest }}"
+        mode: "{{ item.mode }}"
+        owner: "{{ local_user }}"
+      loop: 
+        - { mode: '755', name: "tf/master.tfvars.j2", dest: "{{ tf_vars }}/global.tfvars"}
+        - { mode: '755', name: "tf/local.tfstate.j2", dest: "{{ tf_module }}/local.tfstate"}
+
+    ####### Terraform Apply
+    - name: '{{ ansible_name_module_cloud }} | terraform | apply'
+      terraform:
+        project_path: "{{ tf_module }}"
+        variables_file: "{{ tf_vars }}/global.tfvars"
+        force_init: true
+        state: present
+
+    ####### Detect DNS nameservers
+    - name: '{{ ansible_name_module_cloud }} | shell | Detect Google GCP DNS Name Servers'
+      shell: gcloud dns managed-zones describe ministackdev | awk '/googledomains/{print $2}' | sed 's/\.com\./.com/g'
+      register: dns_servers
+      when: cloud == "gcp"
+
+    ####### Declare result & Instruct user to configure DNS @ registrar level
+    - name: '!! User Action Required !!'
+      debug: 
+        msg:
+        - "Configure your domain name registrar with the following domain name servers:"
+        - "{{ dns_servers.stdout_lines }}"
