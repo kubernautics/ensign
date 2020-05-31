@@ -111,7 +111,7 @@
       become: yes
 
     - name: MSIO | Ensign | k3s | Run k3s Install Script
-      shell: /usr/local/bin/get-k3s-io
+      shell: export INSTALL_K3S_EXEC='--no-flannel' && /usr/local/bin/get-k3s-io
 
     - name: MSIO | Ensign | k3s | stage .kube/config
       file:

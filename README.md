@@ -9,6 +9,7 @@ CI/CD Pipeline ready Ansible/Terraform/Bash/Golang Infrastructure-as-Code
   - Registered domain name
   - Control over the DNS server selection
   - Podman/Docker enabled starting point with internet access
+  - Public Cloud Provider Account with a supported provider
 
 ### Public Cloud Providers:
   - [x] Google Cloud Platform (Free Tier Enabled)
@@ -37,7 +38,7 @@ iot, and other distributed services.
 | HaProxy         | Certificate Enrollment/Renewal | 
 | OpenSSH         | SSH Proxy / Jump Host          |
 
-#### Sketching steps
+#### Get Started:
 ```
 git clone https://github.com/ministackio/ensign.git ~/Git/ensign
 cd ~/Git/ensign/ansible
