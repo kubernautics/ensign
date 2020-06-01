@@ -21,7 +21,7 @@ cp ~/.ccio/ensign/profile.d/example.ensign ~/.ccio/profile.d/ensign
 #### Start a pod to run containers in
 ```
 podman pod create \
-    --name ccio-user               \
+    --name c3tl               \
     --pod-id-file ~/.ccio/.pod.id
 ```
 #### Launch ContainerOne
