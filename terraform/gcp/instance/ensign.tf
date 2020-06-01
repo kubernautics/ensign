@@ -1,9 +1,8 @@
-
 resource "google_compute_instance" "ensign" {
 
   name            = var.instance_name
   zone            = var.zone
-# project         = var.project_name
+  project         = var.project_name
   hostname        = var.hostname
   machine_type    = var.ensign_type
   can_ip_forward  = true

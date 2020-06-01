@@ -83,7 +83,7 @@
 
     ####### Run K3s Setup Script
     - name: '{{ ansible_name_module_cloud }} | shell | {{ ansible_os_family }} | Run k3s Install Script'
-      shell: /usr/local/bin/get-k3s-io
+      shell: /usr/local/bin/get-k3s-io --no-deploy=traefik --no-flannel
 
     ####### Place k3s .kube/config
     - name: '{{ ansible_name_module_cloud }} | file | {{ ansible_os_family }} | stage .kube/config'
