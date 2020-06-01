@@ -16,7 +16,7 @@ git clone https://github.com/ministackio/ensign.git ~/.ccio/ensign
 #### Copy the ensign profile to your ccio/profile.d directory
   - Open and edit to your variables
 ```
-cp ~/.ccio/ensign/profile/example ~/.ccio/profile.d/ensign
+cp ~/.ccio/ensign/profile.d/example.ensign ~/.ccio/profile.d/ensign
 ```
 #### Start a pod to run containers in
 ```
