@@ -29,8 +29,8 @@ podman pod create \
 podman run \
     --name one      --hostname one       \
     --detach        --privileged         \
+    --pod c3tl      --restart on-failure \
     --pull always   --userns=keep-id     \
-    --pod ccio-user --restart on-failure \
     --volume ${HOME}/.ssh:/root/.ssh:z   \
     --volume ${HOME}/.ccio:/root/.ccio:z \
   quay.io/containercraft/one:ccio
