@@ -41,6 +41,12 @@
       - selinux-policy-base
     state: present
  
+####### Enable Docker CE Test Repo
+- name: '{{ ansible_name_module_cloud }} | include | {{ ansible_os_family }} | Install Packages | modprobe | load wireguard kernel module'
+  modprobe:
+    name: wireguard
+    state: present
+
 ####### Download K3s Install Script
 - name: '{{ ansible_name_module_cloud }} | include | {{ ansible_os_family }} | Install Packages | get_url | Download k3s Script'
   get_url:
