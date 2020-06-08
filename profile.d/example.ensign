@@ -2,7 +2,7 @@
 
 export ccioEnsign_provider="gcp"
 export ccioEnsign_regionGcpRegion="us-west3"
-export ccioEnsign_instanceGcpType="e2-small"
+export ccioEnsign_instanceGcpType="e2-medium"
 export ccioEnsign_linuxDistribution="centos"
 
 export ccioEnsign_domainSub="ensign"

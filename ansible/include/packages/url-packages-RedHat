@@ -8,12 +8,25 @@
     state: present
 #   with_items: "{{ list_packages_base }}"
  
+####### Enable WireGuard Copr Repo
+- name: '{{ ansible_name_module_cloud }} | include | {{ ansible_os_family }} | Copr Repo | command | Enable WireGuard Repo'
+  command:
+    cmd: dnf copr enable jdoss/wireguard -y
+    creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:jdoss:wireguard.repo
+    warn: false
+
 ####### Add Docker Repo
 - name: '{{ ansible_name_module_cloud }} | include | {{ ansible_os_family }} | Install Packages | get_url | Download Docker CE repo'
   get_url:
     url: https://download.docker.com/linux/centos/docker-ce.repo
     dest: /etc/yum.repos.d/docer-ce.repo
  
+####### Update All Packages
+- name: '{{ ansible_name_module_cloud }} | include | {{ ansible_os_family }} | Update Packages | dnf | "*":latest'
+  dnf:
+    name: "*"
+    state: latest
+
 ####### Install packages from URL sources
 - name: '{{ ansible_name_module_cloud }} | include | {{ ansible_os_family }} | Install Packages | dnf | Install Packages from URL'
   dnf:
@@ -25,7 +38,7 @@
 ####### Enable Docker CE Test Repo
 - name: '{{ ansible_name_module_cloud }} | include | {{ ansible_os_family }} | Install Packages | ini_file | Enable Docker Test repo'
   ini_file:
-    value: 0
+    value: "0"
     section: 'docker-ce-test'
     dest: /etc/yum.repos.d/docer-ce.repo
     option: enabled

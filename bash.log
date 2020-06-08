@@ -1,0 +1,215 @@
+    1  gcloud init
+    2  gcloud projects create ministackdev
+    3  gcloud projects --help
+    4  gcloud projects delete ministackdev
+    5  gcloud projects delete ministackdev --help
+    6  clear
+    7  gcloud projects delete ministackdev 
+    8  gcloud projects create ministackdev
+    9  gcloud projects undelete ministackdev
+   10  clear
+   11  gcloud dns
+   12  gcloud dns managed-zones
+   13  gcloud dns managed-zones delete ministackdev
+   14  gcloud config set project ministackdev
+   15  gcloud dns managed-zones delete ministackdev
+   16  clear
+   17    gcloud services list --available | grep -i dns
+   18  ls -lha
+   19  ls -lha profile.d/
+   20  cp ~/.ccio/ensign/profile.d/example.ensign ~/.ccio/profile.d/ensign
+   21  vim ~/.ccio/profile.d/ensign 
+   22  clear
+   23  ./.ccio/ensign/ansible/run
+   24  clear
+   25  . ./.ccio/ensign/ansible/run
+   26  . ~/.ccio/ensign/ansible/run
+   27  /root/.ccio/ensign/ansible/run
+   28  cd ensign/
+   29  cd ansible/
+   30  ls templates/tf/local.tfstate.j2 
+   31  cat templates/tf/local.tfstate.j2 
+   32  clear
+   33  ls
+   34  vim variables 
+   35  source ~/.ccio/profile.d/ensign 
+   36  ./run 
+   37  clear
+   38  ls
+   39  ./01-build-instance 
+   40  vim ../terraform/gcp/instance/
+   41  vim ../terraform/gcp/instance/state.tf 
+   42  clear; ./01-build-instance 
+   43  cd ../terraform/gcp/instance/
+   44  terraform validate
+   45  terraform plan
+   46  clear
+   47  vim /root/.ccio/ensign/ansible/01-build-instance 
+   48  terraform apply 
+   49  source ~/.ccio/profile.d/ensign 
+   50  terraform apply 
+   51  vim ensign.tf 
+   52  terraform apply 
+   53  vim ensign.tf 
+   54  ls ..
+   55  ls ../..
+   56  ls ../../..
+   57  cd ../../../ansible/
+   58  ls
+   59  vim variables 
+   60  ls /root/.ccio/tf/
+   61  vim /root/.ccio/tf/global.tfvars 
+   62  ./01-build-instance 
+   63  vim ../terraform/gcp/instance/ensign.tf 
+   64  grep serial ../terraform/gcp/instance/*
+   65  grep serial ../terraform/gcp/instance/* | grep -vE "tfstate"
+   66  vim ../terraform/gcp/instance/serial.tf 
+   67  clear
+   68  ./01-build-instance 
+   69  ./run 
+   70  ssh ccio@ensign.ministack.dev
+   71  kubectl get nodes
+   72  clear
+   73  ls ~/.kube/
+   74  ls ~/.kube/ensign 
+   75  kubectl --help
+   76  clear
+   77  mv ~/.kube/ensign ~/.kube/config
+   78  kubectl get nodes
+   79  clear
+   80  kubectl get po,svc,ip
+   81  kubectl get po,svc
+   82  kubectl get po,svc,config
+   83  kubectl get po,svc,machineconfig
+   84* kubectl get 
+   85  kubectl get po,svc -a
+   86  kubectl get po,svc -
+   87  kubectl get po,svc -A
+   88  kubectl get po,svc,ns -A
+   89  vim 01-build-instance 
+   90  clear
+   91  ls
+   92  vim 02-build-k3s 
+   93  clear
+   94  cd ../terraform/gcp/
+   95  ls
+   96  cd instance/
+   97  cd ../../../ansible/
+   98  clear
+   99  git config user.email usrbinkat@braincraft.io
+  100  git config user.name usrbinkat
+  101  git stage -A; git commit -m 'disable traefik & flannel'; git push origin master
+  102  grep shell 02-build-k3s 
+  103  ssh ccio@ensign.ministack.dev
+  104  clear
+  105  ls
+  106  vim 02-build-k3s 
+  107  ./02-build-k3s 
+  108  ls ~/.kube/
+  109  ls ~/.kube/kubectl get nodes
+  110  ssh ccio@ensign.ministack.dev
+  111  scp ccio@ensign.ministack.dev:~/k3s.yaml ~/.kube/config
+  112  kubectl get nodes
+  113  sed -i 's/127.0.0.1/ensign.ministack.dev/g' ~/.kube/config 
+  114  kubectl get nodes
+  115  clear
+  116  kubectl get po,svc --A
+  117  kubectl get po,sA
+  118  kubectl get po,svc -A
+  119  ssh ccio@ensign.ministack.dev
+  120  clear
+  121  ssh ccio@ensign.ministack.dev
+  122  clear
+  123  ls
+  124  vim ../terraform/gcp/instance/firewall.tf 
+  125  clear
+  126   kubectl apply -f https://raw.githubusercontent.com/squat/kilo/master/manifests/kilo-k3s.yaml
+  127  kubectl get configmap -A
+  128  kubectl get configmap,svc,po -A
+  129  watch kubectl get configmap,svc,po -A
+  130  kubectl get svc
+  131  clear
+  132  kubectl help 
+  133   kubectl destroy -f https://raw.githubusercontent.com/squat/kilo/master/manifests/kilo-k3s.yaml
+  134  kubectl --help | grep -iE "remove|destroy"
+  135  kubectl --help | grep -iE "remove|destroy|delete"
+  136   kubectl delete -f https://raw.githubusercontent.com/squat/kilo/master/manifests/kilo-k3s.yaml
+  137  cd ../terraform/gcp/instance/
+  138  terraform destroy -auto-approve
+  139  clear
+  140  cd ../../../ansible/
+  141  clear
+  142  vim 02-build-k3s 
+  143  ls
+  144  vim variables 
+  145  grep -R small
+  146  cd ../
+  147  ls
+  148  cat ~/.ccio/profile.d/ensign 
+  149  vim ~/.ccio/profile.d/ensign 
+  150  vim ~/.ccio/tf/global.tfvars 
+  151  cd ansible/
+  152  clear
+  153  ls
+  154  ./01-build-instance 
+  155  ssh ccio@ensign.ministack.dev
+  156  clear
+  157  ls
+  158  ./02-build-k3s 
+  159  mv ~/.kube/ensign ~/.kube/config 
+  160  kubectl get nodes
+  161  clear
+  162  kubectl apply -f https://raw.githubusercontent.com/squat/kilo/master/manifests/kilo-k3s-flannel.yaml
+  163  kubectl logs --namespace=kube-system
+  164  kubectl logs --namespace=kube-system pod/kilo-xplq8
+  165  wg
+  166  sudo apt-get install wireguard-tools
+  167  sudo apt-get install wireguard-utils
+  168  ssh ccio@ensign.ministack.dev
+  169  clear
+  170  kubectl logs --namespace=kube-system pod/kilo-xplq8
+  171  kubectl exec -it pod/kilo-xplq8 bash
+  172  kubectl exec -it pod/kilo-xplq8 ash
+  173  kubectl rsh pod/kilo-xplq8 ash
+  174  kubectl exec pod/kilo-xplq8 ash
+  175  kubectl get containers pod/kilo-xplq8 
+  176  kubectl get containers kilo-xplq8 
+  177  ssh ccio@ensign.ministack.dev
+  178  kubectl exec -it traefik-758cd5fc85-4rhpd ash
+  179  kubectl exec -it traefik-758cd5fc85-4rhpd bash
+  180  kubectl switch kube-system
+  181  kubectl config set-context --current --namespace=kube-system
+  182  kubectl exec -it traefik-758cd5fc85-4rhpd bash
+  183  kubectl exec -it traefik-758cd5fc85-4rhpd ash
+  184  kubectl exec -it traefik-758cd5fc85-4rhpd ping 10.180.0.40
+  185  kubectl exec -it traefik-758cd5fc85-4rhpd -- /bin/bash
+  186  kubectl exec -it traefik-758cd5fc85-4rhpd -- /bin/ash
+  187  kubectl exec -it traefik-758cd5fc85-4rhpd -- ls
+  188  kubectl exec -it traefik-758cd5fc85-4rhpd -- /bin/sh
+  189  kubectl exec -it traefik-758cd5fc85-4rhpd -- '/bin/sh'
+  190  kubectl containers
+  191  kubectl containers list
+  192  kubectl get containers
+  193  kubectl get containers pod/traefik-758cd5fc85-4rhpd
+  194  clear
+  195  kubectl get config traefik-758cd5fc85-4rhpd
+  196  kubectl get traefik-758cd5fc85-4rhpd
+  197  kubectl describe traefik-758cd5fc85-4rhpd
+  198  kubectl describe pod traefik-758cd5fc85-4rhpd
+  199  clear
+  200  kubectl run -i --tty --rm debug --image=alpine:latest --restart=Never -- sh
+  201  clear
+  202  kubectl run -i --tty --rm debug --image=alpine:latest --restart=Never -- sh
+  203  clear
+  204  ssh ccio@ensign.ministack.dev
+  205  oc describe daemonset kilo
+  206  kubectl get nodes
+  207  kubectl describee node ensign
+  208  kubectl describe node ensign
+  209  clear
+  210  quit
+  211  kubectl describe node ensign
+  212  ls
+  213  history
+  214  ls
+  215  history | tee bash.log
