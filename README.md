@@ -2,7 +2,6 @@
 ### Purpose: 
 Publish any service, hosted anywhere, with all the convenience of Public Cloud hosting & Automated LetsEncrypt Certificate enrollment. No local firewall control, or dynamic dns required.    
     
-<<<<<<< HEAD
 ### Method: 
 CI/CD Pipeline ready Ansible/Terraform/Bash/Golang Infrastructure-as-Code    
     
@@ -20,8 +19,6 @@ CI/CD Pipeline ready Ansible/Terraform/Bash/Golang Infrastructure-as-Code
   - [ ] Digital Ocean (in progress)
   - [ ] Vultr
 
-=======
->>>>>>> 28f7ef89e20638dd4cf5ff806783a59b73f7a1fc
 ## Story: 
 This project was born out of frustration with the tedium and obstructions of 
 publicly publishing development & small scale / IoT services.
