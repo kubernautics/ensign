@@ -46,9 +46,6 @@ iot, and other distributed services.
 | HaProxy         | Certificate Enrollment/Renewal | 
 | OpenSSH         | SSH Proxy / Jump Host          |
 
-<<<<<<< HEAD
-#### Get Started:
-=======
 ### Public Cloud Providers:
   - [x] Google Cloud Platform (Free Tier Enabled)
   - [ ] Google Kubernetes Engine
@@ -57,7 +54,6 @@ iot, and other distributed services.
   - [ ] Digital Ocean (in progress)
   - [ ] Vultr
 
->>>>>>> 28f7ef89e20638dd4cf5ff806783a59b73f7a1fc
 ```
                                    ~ DISCLAIMER ~  
           This project is not afiliated with any cloud provider by commercial 
